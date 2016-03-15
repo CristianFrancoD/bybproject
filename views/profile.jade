@@ -1,0 +1,17 @@
+doctype html
+html
+    head
+        titile Profile
+    body
+        h1 Perfil
+        img(src= "" alt="imagen")
+        h2 Datos del Usuario
+        p #{nombreUsuario}
+        p #{fechaNacimiento}
+        p #{curp}
+        p #{RFC}
+        p #{domicilio}
+        ul 
+            -for(var i=0;i<habilidades.length;i++)
+                li  #{habilidades[i]} 
+        
