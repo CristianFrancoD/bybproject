@@ -2,16 +2,20 @@ doctype html
 html
 	head
 		title Iniciar sesion
+		link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
 	body
-		h1 Iniciar sesion
+		h1 Iniciar sesión
 		hr
-		br 
+		br
 		p Usuario
 		input(type="text" name="usuario")
 		br
 		p Contraseña:
 		input(type="password" name="contraseña")
 		br
-		input(type="submit", value="Enviar")
+		br
+		input(type="submit", value="Enviar" class="btn btn-primary")
 		hr
 		a(href="#") Olvide mi contraseña
+		br
+		a(href="/") Cancelar
