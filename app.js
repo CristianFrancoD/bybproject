@@ -3,16 +3,18 @@ var app = express();
 
 app.set("view engine","jade");
 
+app.use(express.static(__dirname + '/public'));
+
+app.get("/",function(req, res){
+  res.render("landing");
+});
+
 app.get("/login",function(req, res) {
   res.render("login");
 });
 
 app.get("/signup",function(req, res) {
   res.render("signup");
-});
-
-app.get("/",function(req, res){
-  res.render("start");
 });
 
 app.get("/proyect",function(req, res){
@@ -34,15 +36,15 @@ app.get("/profile", function(req, res){
     var RFC="";
     var domicilio="";
     var habiidades=["habilidad1","habilidad2","habilidad3"]
-    
-    
+
+
    res.render("profile",{nombreUsuario:nombreUsuario,
                         fechaNacimiento:fechaNacimiento,
                         curp:curp,
                         RFC:RFC,
                         domicilio:domicilio,
                         habilidades:habiidades
-   }); 
+   });
 });
 
 app.listen(8080);
