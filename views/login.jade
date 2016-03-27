@@ -1,21 +1,77 @@
 doctype html
-html
-	head
-		title Iniciar sesion
-		link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
-	body
-		h1 Iniciar sesión
-		hr
-		br
-		p Usuario
-		input(type="text" name="usuario")
-		br
-		p Contraseña:
-		input(type="password" name="contraseña")
-		br
-		br
-		input(type="submit", value="Enviar" class="btn btn-primary")
-		hr
-		a(href="#") Olvide mi contraseña
-		br
-		a(href="/") Cancelar
+html(lang='es')
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css")
+    link(rel="stylesheet" href="/styles/switchery/switchery.min.css")
+    
+    script(src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
+    script(src="/js/switchery/switchery.min.js")
+    
+    style.
+      body {
+        background: url(/images/header.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+      }
+    
+    title B&B Projects
+  body
+    div(class="modal fade" tabindex="-1" role="dialog" id="loginModal")
+      div(class="modal-dialog modal-sm")
+        div(class="modal-content")
+          div(class="modal-header")
+            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden='true') &times;
+            h2(class="modal-title") SGPS
+
+          div(class="modal-body")
+            form(class="form-horizontal")
+              h3 Iniciar sesión
+              h5 Sistema para la Gestión de Proyectos de Software.
+
+              div(class="form-group")
+                div(class="col-sm-12")
+                  div(class="input-group")
+                    span(class="input-group-addon")
+                      i(class="glyphicon glyphicon-envelope")
+                    input(type="email" class="form-control" id="email" placeholder="Correo electrónico")
+
+              div(class="form-group")
+                div(class="col-sm-12")
+                  div(class="input-group")
+                    span(class="input-group-addon")
+                      i(class="glyphicon glyphicon-lock")
+                    input(type="password" class="form-control" id="contrasena" placeholder="Contraseña")
+
+              div(class="form-group")
+                div(class="col-sm-12")
+                  input(type="checkbox" class="js-switch")
+                  label(style="padding-left: 10px;") Recordar mis datos
+                  br
+                  a(href="#") Recuperar mi contraseña
+
+          div(class="modal-footer")
+            button(type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="location.href='/dashboard';") Aceptar
+    
+    script.
+      $(window).load(function() {
+        $('#loginModal').modal('show');
+      });
+      
+      $(document).ready(function() {
+
+        // Aplicar estílo a los Checkboxes.
+        var checkBox = document.querySelector('.js-switch');
+        var init = new Switchery(checkBox, {size: 'small'});
+
+        $('#loginModal').on('hidden.bs.modal', function (e) {
+          window.location.href="/";
+        });
+      });

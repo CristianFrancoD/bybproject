@@ -3,8 +3,10 @@ var app = express();
 
 app.set("view engine","jade");
 
+// Se le indica a express que se debe utilizar el directorio public
 app.use(express.static(__dirname + '/public'));
 
+// Se redirecciona a la pagina landing.
 app.get("/",function(req, res){
   res.render("landing");
 });

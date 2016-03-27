@@ -18,24 +18,28 @@ html(lang='es')
     nav(class="navbar navbar-default navbar-fixed-top")
       div(class="container-fluid")
         div(class="navbar-header")
-          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1")
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a(class="navbar-brand page-scroll" href="#">Start Bootstrap)
+          a(class="navbar-brand page-scroll" href="#") B&B PROJECTS
 
-      div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
-        ul(class="nav navbar-nav navbar-right")
-          li(a(class="page-scroll" href="#a">Acerca de...))
+        div(class="collapse navbar-collapse" id="bs-navbar-collapse-1")
+          ul(class="nav navbar-nav navbar-right")
+            li
+              a(class="page-scroll" href="#") Acerca de...
 
     header
       div(class="header-content")
         div(class="header-content-inner")
-          h1 Tu aplicación favorita para administrar todos tus proyectos
+          h1 Administra todos tus proyectos
           hr
-          p Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-          a(href="#about" class="btn btn-primary btn-xl page-scroll">Iniciar sesión)
+          p En B&B te proporcionamos todo lo que necesitas, para que puedas organizar y administrar cualquier clase de proyecto, de una manera fácil y eficiente.
+          a(href="/login" class="btn btn-primary btn-xl page-scroll") Iniciar sesión
+          br
+          br
+          a(href="#" class="btn btn-primary btn-xl page-scroll") Registrarme
 
   script(src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous")
   script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
