@@ -6,7 +6,6 @@ app.set("view engine","jade");
 // Se le indica a express que se debe utilizar el directorio public.
 app.use(express.static(__dirname + '/public'));
 
-// Se redirecciona a Landing.
 app.get("/",function(req, res){
   res.render("landing");
 });
@@ -15,13 +14,21 @@ app.get("/login",function(req, res) {
   res.render("login");
 });
 
+app.get("/about", function(req, res) {
+  res.render("about");
+});
+
 app.get("/signup",function(req, res) {
   res.render("signup");
 });
 
 // Se redireciona al Dashboard.
 app.get("/dashboard", function(req, res) {
-  res.render("dashboard");
+  res.render(
+    "index", {
+      titulo: "Dashboard"
+    }
+  );
 });
 
 app.get("/proyect",function(req, res){
@@ -32,9 +39,6 @@ app.get("/productBacklog",function(req,res){
     res.render("prodBacklog");
 });
 
-app.get("/about", function(req, res) {
-  res.render("about");
-});
 
 app.get("/profile", function(req, res){
     var nombreUsuario="Hector Galvan";

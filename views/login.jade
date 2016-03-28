@@ -7,7 +7,9 @@ html(lang="es")
     meta(name="apple-mobile-web-app-capable" content="yes")
 
     link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css")
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css")
     link(rel="stylesheet" href="/styles/switchery/switchery.min.css")
+    link(rel="stylesheet" href="/styles/social/bootstrap-social.css")
     
     script(src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
@@ -25,41 +27,69 @@ html(lang="es")
     title B&B Projects
   body
     div(class="modal fade" tabindex="-1" role="dialog" id="loginModal")
-      div(class="modal-dialog modal-sm")
+      div(class="modal-dialog modal-md")
         div(class="modal-content")
           div(class="modal-header")
-            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            button(type="button" class="close" data-dismiss="modal" aria-label="Cerrar")
               span(aria-hidden='true') &times;
-            h2(class="modal-title") SGPS
+            h2(class="modal-title") SGPS 
+            h4(class="modal-title") Sistema para la Gestión de Proyectos de Software
 
           div(class="modal-body")
-            form(class="form-horizontal")
-              h3 Iniciar sesión
-              h5 Sistema para la Gestión de Proyectos de Software.
+            div(class="row")
+              div(class="col-md-6")
+                form(class="form-horizontal")
+                  h3 Iniciar sesión
+              
+                  div(class="form-group")
+                    div(class="col-md-12")
+                      div(class="input-group")
+                        span(class="input-group-addon")
+                          i(class="glyphicon glyphicon-envelope")
+                        input(type="email" class="form-control" id="email" placeholder="Correo electrónico")
 
-              div(class="form-group")
-                div(class="col-sm-12")
-                  div(class="input-group")
-                    span(class="input-group-addon")
-                      i(class="glyphicon glyphicon-envelope")
-                    input(type="email" class="form-control" id="email" placeholder="Correo electrónico")
+                  div(class="form-group")
+                    div(class="col-md-12")
+                      div(class="input-group")
+                        span(class="input-group-addon")
+                          i(class="glyphicon glyphicon-lock")
+                        input(type="password" class="form-control" id="contrasena" placeholder="Contraseña")
 
-              div(class="form-group")
-                div(class="col-sm-12")
-                  div(class="input-group")
-                    span(class="input-group-addon")
-                      i(class="glyphicon glyphicon-lock")
-                    input(type="password" class="form-control" id="contrasena" placeholder="Contraseña")
-
-              div(class="form-group")
-                div(class="col-sm-12")
-                  input(type="checkbox" class="js-switch")
-                  label(style="padding-left: 10px;") Recordar mis datos
-                  br
-                  a(href="#") Recuperar mi contraseña
-
+                  div(class="form-group")
+                    div(class="col-md-12")
+                      input(type="checkbox" class="js-switch")
+                      label(style="padding-left: 10px;") Recordar mis datos
+                  
+                  button(type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="location.href='/dashboard';") Aceptar
+                
+              div(class="col-md-6")
+                h3 También puedes
+                
+                div(style="padding-bottom: 10px;")
+                  div(class="row")
+                    div(class="col-md-12")
+                      a(class="btn btn-block btn-social btn-facebook")
+                        span(class="fa fa-facebook")
+                        | Iniciar sesión con Facebook
+                
+                div(style="padding-bottom: 10px;")  
+                  div(class="row")
+                    div(class="col-md-12")
+                      a(class="btn btn-block btn-social btn-twitter")
+                        span(class="fa fa-twitter")
+                        | Iniciar sesión con Twitter
+                        
+                div(class="row")
+                  div(class="col-md-12")
+                    a(class="btn btn-block btn-social btn-google")
+                      span(class="fa fa-google")
+                      | Iniciar sesión con Google
+                      
           div(class="modal-footer")
-            button(type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="location.href='/dashboard';") Aceptar
+            ¿No puedes iniciar sesión?. Tal vez 
+            a(href="#") olvidaste tú contraseña
+            |.
+    
     
     script.
       $(window).load(function() {
