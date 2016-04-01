@@ -1,20 +1,60 @@
 doctype html
-html
+html(lang="es")
 	head
-		title Iniciar sesión
-		link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		meta(name="apple-mobile-web-app-capable" content="yes")
+
+		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css")
+    
+		link(rel="stylesheet" href="/styles/full.css")
+    
+		script(src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
+    
+		title B&B Projects
+		
 	body
-		h1 Registrarse
-		br
-		form(id="signup", method="POST", action="/")
-			div Nombre:
-			input(type="text", name="nombre")
-			div Email:
-			input(type="text", name="email")
-			div Contraseña:
-			input(type="password", name="contraseña")
-			div Usuario:
-			input(type="text", name="usuario")
-			div
-			br
-			input(type="submit", value="Guardar", class="btn btn-primary")
+		div(class="modal fade" tabindex="-1" role="dialog" id="signUpModal")
+			div(class="modal-dialog modal-sm")
+				div(class="modal-content")
+					div(class="modal-header")
+						button(type="button" class="close" data-dismiss="modal" aria-label="Cerrar")
+							span(aria-hidden='true') &times;
+						h2(class="modal-title") SGPS 
+						h4(class="modal-title") Sistema para la Gestión de Proyectos de Software
+
+					div(class="modal-body")
+						form
+							h3 Registro de usuario
+					
+							div(class="form-group")
+								input(type="text" class="form-control" id="nombre" placeholder="Nombre(s)")
+
+							div(class="form-group")
+								input(type="text" class="form-control" id="primerApellido" placeholder="Primer apellido")
+
+							div(class="form-group")
+								input(type="text" class="form-control" id="segundoApellido" placeholder="Segundo apellido")
+
+							div(class="form-group")
+								input(type="email" class="form-control" id="email" placeholder="Correro electrónico")
+
+							div(class="form-group")
+								input(type="password" class="form-control" id="contrasena" placeholder="Contraseña")
+					
+					div(class="modal-footer")
+						button(type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="location.href='/';") Aceptar
+					
+	script.
+		$(window).load(function() {
+			$('#signUpModal').modal('show');
+		});
+	
+		$(document).ready(function() {
+
+			$('#signUpModal').on('hidden.bs.modal', function (e) {
+				window.location.href="/";
+			});
+		});
