@@ -26,26 +26,31 @@ html(lang="es")
 						h4(class="modal-title") Sistema para la Gestión de Proyectos de Software
 
 					div(class="modal-body")
-						form
+						form(action="/signup", method="POST")
 							h3 Registro de usuario
 					
 							div(class="form-group")
-								input(type="text" class="form-control" id="nombre" placeholder="Nombre(s)")
+								input(type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre(s)")
 
 							div(class="form-group")
-								input(type="text" class="form-control" id="primerApellido" placeholder="Primer apellido")
+								input(type="text" class="form-control" name="apellidoP" id="primerApellido" placeholder="Primer apellido")
 
 							div(class="form-group")
-								input(type="text" class="form-control" id="segundoApellido" placeholder="Segundo apellido")
+								input(type="text" class="form-control" name="apellidoM" id="segundoApellido" placeholder="Segundo apellido")
 
 							div(class="form-group")
-								input(type="email" class="form-control" id="email" placeholder="Correro electrónico")
+								input(type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico")
 
 							div(class="form-group")
-								input(type="password" class="form-control" id="contrasena" placeholder="Contraseña")
-					
+								input(type="password" class="form-control" name="contra" id="contrasena" placeholder="Contraseña")
+
+							div(class="form-group")
+								input(type="password" class="form-control" name="otropassword" id="otropassword" placeholder="Confirmar contraseña")
+
+							div
+								input(type="submit" value="Aceptar" class="btn btn-info")
 					div(class="modal-footer")
-						button(type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="location.href='/';") Aceptar
+						
 					
 	script.
 		$(window).load(function() {
