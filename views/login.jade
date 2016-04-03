@@ -33,7 +33,7 @@ html(lang="es")
           div(class="modal-body")
             div(class="row")
               div(class="col-md-6")
-                form(class="form-horizontal")
+                form(class="form-horizontal" action="sessions" method="POST")
                   h3 Iniciar sesión
               
                   div(class="form-group")
@@ -41,21 +41,22 @@ html(lang="es")
                       div(class="input-group")
                         span(class="input-group-addon")
                           i(class="glyphicon glyphicon-envelope")
-                        input(type="email" class="form-control" id="email" placeholder="Correo electrónico")
+                        input(type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico")
 
                   div(class="form-group")
                     div(class="col-md-12")
                       div(class="input-group")
                         span(class="input-group-addon")
                           i(class="glyphicon glyphicon-lock")
-                        input(type="password" class="form-control" id="contrasena" placeholder="Contraseña")
+                        input(type="password" class="form-control" name="contra" id="contrasena" placeholder="Contraseña")
 
                   div(class="form-group")
                     div(class="col-md-12")
                       input(type="checkbox" class="js-switch")
                       label(style="padding-left: 10px;") Recordar mis datos
-                  
-                  button(type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="location.href='/dashboard';") Aceptar
+                  div
+                  input(type="submit" value="Aceptar" class="btn btn-primary btn-block")
+                 
                 
               div(class="col-md-6")
                 h3 También puedes

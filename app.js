@@ -2,14 +2,22 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
+var session = require("express-session");
 app.set("view engine","jade");
 
 // Se le indica a express que se debe utilizar el directorio public.
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(session({
+
+secret: "fc47873566a1da7c3ca94ecccba88241",
+resave: false,
+saveUninittialized:false
+}));
 app.get("/",function(req, res){
   res.render("landing");
+ 
 });
 
 app.get("/login",function(req, res) {
@@ -68,9 +76,19 @@ console.log("Se guardo el usuario");
 });
 
 
+app.post("/sessions", function(req, res){
+    Usuario.findOne({email:req.body.email, contrasena:req.body.contra},function(err,user){
+
+      req.session.user = user._id;
+       console.log(req.session.user);
+      res.redirect("/");
+    });
+});
 
 
-app.get("/profile", function(req, res){
+
+
+app.post("/profile", function(req, res){
     var nombreUsuario="Hector Galvan";
     var fechaNacimiento="15/09/1992";
     var curp="";

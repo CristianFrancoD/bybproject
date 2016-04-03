@@ -10,11 +10,11 @@ nombre: String,
 apellidoP: String,
 apellidoM: String,
 email: String,
-contrasena:{type:String, minlength:[6,"El password es muy corto"],validate:{
+contrasena:{type:String, minlength:[6,"El password es muy corto"]/*,validate:{
       validator: function(p){
-        return this.confirmarPassword === p;
+        return this.confirmarPassword == p;
       }, message: "Las contraseñas no son iguales"
-      }
+      }*/
     }
        
     
