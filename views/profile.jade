@@ -1,17 +1,51 @@
-doctype html
-html
-    head
-        titile Profile
-    body
-        h1 Perfil
-        img(src= "" alt="imagen")
-        h2 Datos del Usuario
-        p #{nombreUsuario}
-        p #{fechaNacimiento}
-        p #{curp}
-        p #{RFC}
-        p #{domicilio}
-        ul 
-            -for(var i=0;i<habilidades.length;i++)
-                li  #{habilidades[i]} 
+extends ./layout.jade
+
+
+block meta
+ 
+
+block link
+  link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+  
+  
+  
+  
+  
+  
+block title
+  title Profile
+  
+  
+
+block navbar-header
+ 
+
+block subnavbar-header
+                
+block content
+  div(class="container") 
+    div(class="row")
+      div(class="col-md-2") 
+        a(href="#" )
+          img(class="img-thumbnail" src="images/img-profile-missing.png" alt="Foto")
+        div(class="caption")
+          h3(class="text-center") #{nombreUsuario}
+          
+          
+      
+      
+      
+      div(class="col-md-10") 
+        div(class="thumbnail")
+          p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+    
+    
+    
+    
+   
+   
+
+block footer
+  
         
+block script
