@@ -1,9 +1,16 @@
 var express = require("express");
+var ConnectRoles = require("connect-roles");
 var app = express();
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
 var session = require("express-session");
 app.set("view engine","jade");
+var user = new ConnectRoles({
+  failureHandler: function (req,res,action){
+    res.status(403);
+    res.send("Acceso denegado! No tienes permiso a:"+action);
+  }
+});
 
 // Se le indica a express que se debe utilizar el directorio public.
 app.use(express.static(__dirname + '/public'));
@@ -15,6 +22,34 @@ secret: "fc47873566a1da7c3ca94ecccba88241",
 resave: false,
 saveUninittialized:false
 }));
+
+app.use(user.middleware());
+
+user.use("dash",function(req){
+  console.log(req.session.user);
+  if(req.session.hasOwnProperty("user")){
+    if(req.session.rol ==='Scrum Master'){
+      console.log("entro!");
+    return true;  
+    }
+    
+    
+  }
+})
+
+user.use("proyects",function(req){
+  console.log(req.session.user);
+  if(req.session.hasOwnProperty("user")){
+    if(req.session.rol ==='Product Owner'){
+      console.log("entro!");
+    return true;  
+    }
+    
+    
+  }
+})
+
+
 app.get("/",function(req, res){
   res.render("landing");
  
@@ -36,7 +71,7 @@ app.get("/signup",function(req, res) {
 });
 
 // Se redireciona al Dashboard.
-app.get("/dashboard", function(req, res) {
+app.get("/dashboard",user.can("dash"), function(req, res) {
   res.render(
     "index", {
       titulo: "Dashboard"
@@ -44,7 +79,7 @@ app.get("/dashboard", function(req, res) {
   );
 });
 
-app.get("/proyect",function(req, res){
+app.get("/proyect",user.can("proyects"),function(req, res){
     res.render("proyects");
 });
 
@@ -60,7 +95,8 @@ apellidoP: req.body.apellidoP,
 apellidoM: req.body.apellidoM,
 email: req.body.email,
 contrasena: req.body.contra,
-otropassword: req.body.otropassword
+otropassword: req.body.otropassword,
+rol:req.body.rol
 });
 usuario.save().then(function(us){
 res.redirect("/")
@@ -80,7 +116,9 @@ app.post("/sessions", function(req, res){
     Usuario.findOne({email:req.body.email, contrasena:req.body.contra},function(err,user){
 
       req.session.user = user._id;
+      req.session.rol = user.rol;
        console.log(req.session.user);
+       console.log(req.session.rol);
       res.redirect("/");
     });
 });

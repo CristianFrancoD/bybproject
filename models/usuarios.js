@@ -15,7 +15,8 @@ contrasena:{type:String, minlength:[6,"El password es muy corto"]/*,validate:{
         return this.confirmarPassword == p;
       }, message: "Las contraseñas no son iguales"
       }*/
-    }
+    },
+rol:String
        
     
 
