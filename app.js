@@ -8,7 +8,7 @@ app.set("view engine","jade");
 var user = new ConnectRoles({
   failureHandler: function (req,res,action){
     res.status(403);
-    res.send("Acceso denegado! No tienes permiso a:"+action);
+    res.render("forbidden");
   }
 });
 
@@ -25,7 +25,14 @@ saveUninittialized:false
 
 app.use(user.middleware());
 
-user.use("dash",function(req){
+user.use("anonymousUser",function(req) {
+    if(req.session.hasOwnProperty("user")){
+    return true;  
+    }
+})
+
+
+user.use("dashboard",function(req){
   console.log(req.session.user);
   if(req.session.hasOwnProperty("user")){
     if(req.session.rol ==='Scrum Master'){
@@ -71,7 +78,7 @@ app.get("/signup",function(req, res) {
 });
 
 // Se redireciona al Dashboard.
-app.get("/dashboard",user.can("dash"), function(req, res) {
+app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
   res.render(
     "index", {
       titulo: "Dashboard"
@@ -79,11 +86,11 @@ app.get("/dashboard",user.can("dash"), function(req, res) {
   );
 });
 
-app.get("/proyect",user.can("proyects"),function(req, res){
+app.get("/proyect",user.can("anonymousUser"),function(req, res){
     res.render("proyects");
 });
 
-app.get("/productBacklog",function(req,res){
+app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
     res.render("prodBacklog");
 });
 
