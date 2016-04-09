@@ -66,18 +66,6 @@ user.use("desarrollador",function(req){
   
 })
 
-user.use("profile",function(req){
-  console.log(req.session.user);
-  if(req.session.hasOwnProperty("user")){
-    if(req.session.rol ==='Product Owner'){
-      console.log("entro!");
-    return true;  
-    }
-    
-    
-  }
-})
-
 app.get("/",function(req, res){
   res.render("landing");
  
@@ -99,11 +87,7 @@ app.get("/signup",function(req, res) {
 });
 
 // Se redireciona al Dashboard.
-app.get("/dashboard",user.can("anonymousUser"),user.can("desarrollador").here, function(req, res) {
-  console.log(user.can("desarrollador"));
-  res.render("home/developer")
 
-});
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
 
@@ -116,11 +100,7 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
    }
 });
 
-app.get("/dashboard",user.can("anonymousUser"),user.can("scrum-master"), function(req, res) {
 
-  res.render("home/admin")
-
-});
 
 app.get("/proyect",user.can("anonymousUser"),user.can("product-owner"),function(req, res){
     res.render("proyects");
@@ -131,14 +111,6 @@ app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
     res.render("prodBacklog");
   
     
-});
-
-app.get("/profile",user.can("anonymousUser"),function(req, res){
-    res.render("profile",{nombreUsuario:"Hector Galvan"}
-    );
-});
-app.get("/editProfile",user.can("anonymousUser"),function(req, res){
-    res.render("editProfile");
 });
 
 app.post("/signup", function(req,res){
@@ -180,7 +152,7 @@ app.post("/sessions", function(req, res){
 
 
 
-/*app.post("/profile", function(req, res){
+app.post("/profile", function(req, res){
     var nombreUsuario="Hector Galvan";
     var fechaNacimiento="15/09/1992";
     var curp="";
@@ -197,5 +169,5 @@ app.post("/sessions", function(req, res){
                         habilidades:habiidades
    });
 });
-*/
+
 app.listen(8080);
