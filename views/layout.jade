@@ -63,9 +63,9 @@ body
               span Dashboard
 
           li
-            a(href="reports.html")
+            a(href="#newProjectModal" data-toggle="modal")
               i(class="icon-tasks")
-              span Proyecto
+              span Crear proyecto
             
           li
             a(href="guidely.html")
@@ -109,6 +109,38 @@ body
         div(class="row")
           div(class="span12" class="text-center") &copy; 2016
             a(href="http://www.egrappler.com/" class="text-center")  B&B Projects
+  
+  block newProjectModal
+  div(class="modal fade" tabindex="-1" role="dialog" id="newProjectModal")
+    div(class="modal-dialog modal-md")
+      div(class="modal-content")
+        div(class="modal-header")
+          button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+          h3 Nuevo proyecto
+
+        div(class="modal-body")
+          form
+            div(class="form-group")
+              div(class="col-md-12")
+                label(for="nombreProyecto") Nombre del proyecto:
+                input(type="text" class="form-control" name="nombreProyecto" id="nombreProyecto")
+              div(class="form-group")
+                div(class="col-md-12")
+                  label(for="fechaSolicitud") Fecha de solicitud:
+                  input(type="text" class="form-control" name="fechaSolicitud" id="fechaSolicitud")
+              div(class="form-group")
+                div(class="col-md-12")
+                  label(for="fechaArranque") Fecha de arranque:
+                  input(type="text" class="form-control" name="fechaArranque" id="fechaArranque")
+              div(class="form-group")
+                div(class="col-md-12")
+                  label(for="descripcion") Descripción:
+                  input(type="text" class="form-control" name="descripcion" id="descripcion")        
+
+        div(class="modal-footer")
+          input(type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
+          input(type="submit" class="btn btn-primary" value="Crear") 
+    
   block script
   script(src="/js/template/jquery-1.7.2.min.js") 
   script(src="/js/template/excanvas.min.js") 
