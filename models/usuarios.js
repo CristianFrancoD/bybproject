@@ -1,11 +1,14 @@
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/bybDataBase");
-var Schema = mongoose.Schema;
+var Schema = mongoose.Schema,
+ObjectId = Schema.ObjectId;
 
+var usuarioSchema = new Schema();
+var rolSchema = new Schema();
+var proyectosSchema = new Schema();
 
-
-
-var usuarioSchema = new Schema({
+ usuarioSchema.add({
+id:ObjectId,
 nombre: String,
 apellidoP: String,
 apellidoM: String,
@@ -16,10 +19,23 @@ contrasena:{type:String, minlength:[6,"El password es muy corto"]/*,validate:{
       }, message: "Las contraseñas no son iguales"
       }*/
     },
-rol:String
-       
-    
+proyectos:[ {proyectosSchema,rolSchema} ]
+});
 
+rolSchema.add({
+    id:ObjectId,
+    nombreRol:String,
+})
+
+proyectosSchema.add({
+   id:Schema.ObjectId,
+   nombreProyecto: String,
+   fechaSolicitud: Date,
+   fechaArranque: Date,
+   descripcion: String,
+   proyectManager: {usuarioSchema},
+   productOwner: {usuarioSchema},
+   equipoInvolucdrado: {usuarioSchema}
 });
 
 usuarioSchema.virtual("confirmarPassword").get(function(){
@@ -28,7 +44,12 @@ usuarioSchema.virtual("confirmarPassword").get(function(){
     this.otroPassword = contrasena;
 });
 
+ 
 
-var Usuario = mongoose.model("Usuario",usuarioSchema);
-module.exports.Usuario = Usuario;
 
+//var Usuario = mongoose.model("Usuario",usuarioSchema);
+module.exports ={ 
+    Usuario: mongoose.model('Usuario',usuarioSchema),
+    Rol: mongoose.model('Rol',rolSchema),
+    Proyecto: mongoose.model('Proyecto',proyectosSchema)
+};

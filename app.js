@@ -3,6 +3,8 @@ var ConnectRoles = require("connect-roles");
 var app = express();
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
+var Rol = require("./models/usuarios").Rol;
+var Proyecto = require("./models/usuarios").Proyecto;
 var session = require("express-session");
 app.set("view engine","jade");
 var user = new ConnectRoles({
@@ -14,7 +16,7 @@ var user = new ConnectRoles({
 
 // Se le indica a express que se debe utilizar el directorio public.
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
 
@@ -28,20 +30,20 @@ app.use(user.middleware());
 user.use("anonymousUser",function(req) {
     if(req.session.hasOwnProperty("user")){
       console.log("No es anonimo");
-    return true;
+    return true;  
     }
 })
 
 
 user.use("scrum-master",function(req){
   console.log(req.session.user);
-
+  
     if(req.session.rol ==='scrum master'){
       console.log("entro scrum");
-    return true;
-
-
-
+    return true;  
+    
+    
+    
   }
 })
 
@@ -50,25 +52,25 @@ user.use("product-owner",function(req){
 
     if(req.session.rol ==='product owner'){
       console.log("entro");
-    return true;
+    return true;  
     }
-
+    
 })
 
 user.use("desarrollador",function(req){
   console.log("Entro en funcion desarrollador")
     console.log(req.session.user);
-
+  
     if(req.session.rol ==='desarrollador'){
       console.log("entro developer");
-      return true;
+      return true;  
   }
-
+  
 })
 
 app.get("/",function(req, res){
   res.render("landing");
-
+ 
 });
 
 app.get("/login",function(req, res) {
@@ -93,7 +95,6 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
 
   if(req.session.rol==='desarrollador'){
       res.render("home/developer");
-
   }else if(req.session.rol==='scrum master'){
       res.render("home/admin");
   }else if(req.session.rol==='product owner'){
@@ -101,27 +102,28 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
    }
 });
 
+
+
 app.get("/proyect",user.can("anonymousUser"),user.can("product-owner"),function(req, res){
     res.render("proyects");
 });
 
 app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
-
+  
     res.render("prodBacklog");
-
-
+  
+    
 });
 
 app.post("/signup", function(req,res){
-
-var usuario = new Usuario({
-nombre: req.body.nombre,
+  
+var usuario = new Usuario({ 
+nombre: req.body.nombre, 
 apellidoP: req.body.apellidoP,
 apellidoM: req.body.apellidoM,
 email: req.body.email,
 contrasena: req.body.contra,
-otropassword: req.body.otropassword,
-rol:req.body.rol
+otropassword: req.body.otropassword
 });
 usuario.save().then(function(us){
 res.redirect("/")
