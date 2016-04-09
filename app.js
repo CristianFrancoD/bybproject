@@ -27,35 +27,44 @@ app.use(user.middleware());
 
 user.use("anonymousUser",function(req) {
     if(req.session.hasOwnProperty("user")){
+      console.log("No es anonimo");
     return true;  
     }
 })
 
 
-user.use("dashboard",function(req){
+user.use("scrum-master",function(req){
   console.log(req.session.user);
-  if(req.session.hasOwnProperty("user")){
-    if(req.session.rol ==='Scrum Master'){
-      console.log("entro!");
+  
+    if(req.session.rol ==='scrum master'){
+      console.log("entro scrum");
     return true;  
-    }
+    
     
     
   }
 })
 
-user.use("proyects",function(req){
+user.use("product-owner",function(req){
   console.log(req.session.user);
-  if(req.session.hasOwnProperty("user")){
-    if(req.session.rol ==='Product Owner'){
-      console.log("entro!");
+
+    if(req.session.rol ==='product owner'){
+      console.log("entro");
     return true;  
     }
     
-    
-  }
 })
 
+user.use("desarrollador",function(req){
+  console.log("Entro en funcion desarrollador")
+    console.log(req.session.user);
+  
+    if(req.session.rol ==='desarrollador'){
+      console.log("entro developer");
+      return true;  
+  }
+  
+})
 
 app.get("/",function(req, res){
   res.render("landing");
@@ -78,20 +87,38 @@ app.get("/signup",function(req, res) {
 });
 
 // Se redireciona al Dashboard.
-app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
-  res.render(
-    "index", {
-      titulo: "Dashboard"
-    }
-  );
+app.get("/dashboard",user.can("anonymousUser"),user.can("desarrollador").here, function(req, res) {
+  console.log(user.can("desarrollador"));
+  res.render("home/developer")
+
 });
 
-app.get("/proyect",user.can("anonymousUser"),function(req, res){
+app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
+
+  if(req.session.rol==='desarrollador'){
+      res.render("home/developer");
+  }else if(req.session.rol==='scrum master'){
+      res.render("home/admin");
+  }else if(req.session.rol==='product owner'){
+      res.render("home/prodOwner")
+   }
+});
+
+app.get("/dashboard",user.can("anonymousUser"),user.can("scrum-master"), function(req, res) {
+
+  res.render("home/admin")
+
+});
+
+app.get("/proyect",user.can("anonymousUser"),user.can("product-owner"),function(req, res){
     res.render("proyects");
 });
 
 app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
+  
     res.render("prodBacklog");
+  
+    
 });
 
 app.post("/signup", function(req,res){
@@ -126,7 +153,7 @@ app.post("/sessions", function(req, res){
       req.session.rol = user.rol;
        console.log(req.session.user);
        console.log(req.session.rol);
-      res.redirect("/");
+      res.redirect("/dashboard");
     });
 });
 
