@@ -13,11 +13,11 @@ div(class="row")
               div(class="message_wrap") 
                 span(class="arrow")
                 div(class="info")
-                  h3 Nombre Scrum Master
+                  h3 #{proyecto.proyectManager.nombre}
                 div(class="text") 
-                  h4 Nombre del proyecto
+                  h4 #{proyecto.nombreProyecto}
                   div(style="padding-top: 10px;")
-                    p Fecha de solicitud:
-                    p Fecha de inicio:
-                    p Descripción del proyecto.
+                    p Fecha de solicitud: #{proyecto.fechaSolicitud}
+                    p Fecha de inicio: #{proyecto.fechaArranque}
+                    p Descripción del proyecto: #{proyecto.descripcion}
             

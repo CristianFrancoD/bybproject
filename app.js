@@ -1,4 +1,5 @@
 var express = require("express");
+var http = require("http");
 var ConnectRoles = require("connect-roles");
 var app = express();
 var bodyParser = require("body-parser");
@@ -92,23 +93,36 @@ app.get("/signup",function(req, res) {
 
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
-  Proyecto.find({proyectManager:req.session.user})
-    .populate("proyectManager")
+  
+  Proyecto.count({},function(err,count){
+    if(count!=0){
+       Proyecto
+      .findOne({proyectManager:req.session.user})
+      .populate('proyectManager')
+      .exec(function (err, proyecto) {
+      if (err) console.log(String(err));
+        console.log(proyecto);
+        res.render("home/developer",{
+        proyecto:proyecto
+      });
+ 
+});
+     }
+      }
+  )
+  res.render("home/prodOwner");
+});
+
+app.get("/api/proyectos",user.can("anonymousUser"),function(req, res) {
+     Proyecto
+     .find({proyectManager:req.session.user})
     .exec(function (err, usuario) {
   if (err) console.log(String(err));
 
   console.log(usuario);
+  res.json(usuario);
 });
- /* if(req.session.rol==='desarrollador'){
-      res.render("home/developer");
-  }else if(req.session.rol==='scrum master'){
-      res.render("home/admin");
-  }else if(req.session.rol==='product owner'){
-      res.render("home/prodOwner")
-   }*/
-         res.render("home/developer");
-});
-
+})
 
 
 app.get("/proyect",user.can("anonymousUser"),user.can("product-owner"),function(req, res){
@@ -173,14 +187,6 @@ app.post("/dashboard",function(req,res){
     Usuario.findByIdAndUpdate(req.session.user, { $set: { proyectos:proj._id }}, function (err, user) {
     if (err) console.log(String(err));
     console.log(user);
-    
-    Proyecto.findOne({nombreProyecto:proj.nombreProyecto})
-    .populate('proyectManager')
-    .exec(function (err, proyect) {
-  if (err) console.log(String(err));
-  console.log('The creator is %s', proyect.proyectManager.nombre);
-  // prints "The creator is Aaron"
-    });
 
 });
     res.redirect("dashboard");
