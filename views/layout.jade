@@ -101,10 +101,7 @@ body
                 a(href="#") 404
 
   block content
-  div(class="main")
-    div(class="main-inner")
-      div(class="container")
-        include ./home/simple-cards.jade
+  
   
   block footer
   div(class="footer")
@@ -149,7 +146,8 @@ body
                   textarea(class="span4" rows="5" name="descripcion")
     
               input(class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
-              input(type="submit" class="btn btn-primary" value="Crear Proyecto")
+              a(href="/simple-cards")
+                  button(class="btn btn-primary" type="submit" ) Crear Proyecto
     
   block script
   script(src="/js/template/jquery-1.7.2.min.js") 

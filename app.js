@@ -74,6 +74,8 @@ app.get("/",function(req, res){
  
 });
 
+
+
 app.get("/login",function(req, res) {
   res.render("login");
 
@@ -96,22 +98,17 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
   
   Proyecto.count({},function(err,count){
     if(count!=0){
-       Proyecto
-      .findOne({proyectManager:req.session.user})
-      .populate('proyectManager')
-      .exec(function (err, proyecto) {
-      if (err) console.log(String(err));
-        console.log(proyecto);
-        res.render("home/developer",{
-        proyecto:proyecto
-      });
- 
+      console.log("Numero de proyectos",count);
+       res.redirect("/simple-cards")
+    }
+    res.render("layout");
+  })
+  
+    
+   
 });
-     }
-      }
-  )
-  res.render("home/prodOwner");
-});
+
+
 
 app.get("/api/proyectos",user.can("anonymousUser"),function(req, res) {
      Proyecto
@@ -132,6 +129,35 @@ app.get("/proyect",user.can("anonymousUser"),user.can("product-owner"),function(
 app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
   
     res.render("prodBacklog");
+  
+    
+});
+
+app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
+    Proyecto
+      .findOne({proyectManager:req.session.user})
+      .populate('proyectManager')
+      .exec(function (err, proyecto) {
+      if (err) console.log(String(err));
+        console.log("ALTO");
+        console.log(proyecto);
+       res.render("home/simple-cards",{
+        proyecto:proyecto
+      });
+})
+})
+
+
+app.get("/profile",user.can("anonymousUser"),function(req,res){
+  
+    res.render("profile");
+  
+    
+});
+
+app.get("/editProfile",user.can("anonymousUser"),function(req,res){
+  
+    res.render("editProfile");
   
     
 });
@@ -189,7 +215,7 @@ app.post("/dashboard",function(req,res){
     console.log(user);
 
 });
-    res.redirect("dashboard");
+    res.redirect("/simple-cards");
     console.log("Se creo el proyecto-");
     console.log(proj);
   },function(err){
