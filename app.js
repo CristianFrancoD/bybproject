@@ -96,7 +96,7 @@ app.get("/signup",function(req, res) {
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
   
-  Proyecto.count({},function(err,count){
+  Proyecto.count({proyectManager:req.session.user},function(err,count){
     if(count!=0){
       console.log("Numero de proyectos",count);
        res.redirect("/simple-cards")
@@ -134,15 +134,21 @@ app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
 });
 
 app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
+   var data = [];
     Proyecto
-      .findOne({proyectManager:req.session.user})
+      .find({proyectManager:req.session.user})
       .populate('proyectManager')
       .exec(function (err, proyecto) {
       if (err) console.log(String(err));
         console.log("ALTO");
         console.log(proyecto);
+        for(var val in proyecto) {
+           data.push(proyecto[val])
+          
+        }
+        console.log(data);
        res.render("home/simple-cards",{
-        proyecto:proyecto
+        proyecto:data
       });
 })
 })
