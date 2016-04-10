@@ -119,7 +119,7 @@ body
           h3 Nuevo proyecto
 
         div(class="modal-body")
-          form
+          form(action="dashboard",method='POST')
             div(class="form-group")
               div(class="col-md-12")
                 label(for="nombreProyecto") Nombre del proyecto:
@@ -137,9 +137,9 @@ body
                   label(for="descripcion") Descripción:
                   input(type="text" class="form-control" name="descripcion" id="descripcion")        
 
-        div(class="modal-footer")
-          input(type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
-          input(type="submit" class="btn btn-primary" value="Crear") 
+              div(class="modal-footer")
+                input(type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
+                input(type="submit" class="btn btn-primary" value="Crear") 
     
   block script
   script(src="/js/template/jquery-1.7.2.min.js") 

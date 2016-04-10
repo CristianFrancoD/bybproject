@@ -93,13 +93,14 @@ app.get("/signup",function(req, res) {
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
 
-  if(req.session.rol==='desarrollador'){
+ /* if(req.session.rol==='desarrollador'){
       res.render("home/developer");
   }else if(req.session.rol==='scrum master'){
       res.render("home/admin");
   }else if(req.session.rol==='product owner'){
       res.render("home/prodOwner")
-   }
+   }*/
+         res.render("home/developer");
 });
 
 
@@ -123,7 +124,7 @@ apellidoP: req.body.apellidoP,
 apellidoM: req.body.apellidoM,
 email: req.body.email,
 contrasena: req.body.contra,
-otropassword: req.body.otropassword
+//otropassword: req.body.otropassword
 });
 usuario.save().then(function(us){
 res.redirect("/")
@@ -145,10 +146,31 @@ app.post("/sessions", function(req, res){
       req.session.user = user._id;
       req.session.rol = user.rol;
        console.log(req.session.user);
-       console.log(req.session.rol);
+ //      console.log(req.session.rol);
       res.redirect("/dashboard");
     });
 });
+
+app.post("/dashboard",function(req,res){
+  console.log(req.body);
+  var proyecto = new Proyecto({
+    
+    nombreProyecto:req.body.nombreProyecto,
+    fechaSolicitud:req.body.fechaSolicitud,
+    fechaArranque:req.body.fechaArranque,
+    descripcion:req.body.descripcion,
+    proyectManager:(req.session.user,null)
+  });
+  proyecto.save().then(function(proj){
+    res.redirect("dashboard");
+    console.log("Se creo el proyecto-");
+    console.log(proj);
+  },function(err){
+    console.log(String(err));
+    console.log("Hubo un error");
+    
+  })
+})
 
 
 

@@ -30,8 +30,8 @@ rolSchema.add({
 proyectosSchema.add({
    id:Schema.ObjectId,
    nombreProyecto: String,
-   fechaSolicitud: Date,
-   fechaArranque: Date,
+   fechaSolicitud: String,
+   fechaArranque: String,
    descripcion: String,
    proyectManager: {usuarioSchema},
    productOwner: {usuarioSchema},
