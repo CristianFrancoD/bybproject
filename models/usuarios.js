@@ -19,7 +19,7 @@ contrasena:{type:String, minlength:[6,"El password es muy corto"]/*,validate:{
       }, message: "Las contraseñas no son iguales"
       }*/
     },
-proyectos:[ {proyectosSchema,rolSchema} ]
+proyectos:[ {type : mongoose.Schema.ObjectId, ref : 'Proyecto'}]
 });
 
 rolSchema.add({
@@ -33,9 +33,9 @@ proyectosSchema.add({
    fechaSolicitud: String,
    fechaArranque: String,
    descripcion: String,
-   proyectManager: {usuarioSchema},
-   productOwner: {usuarioSchema},
-   equipoInvolucdrado: {usuarioSchema}
+   proyectManager: {type : mongoose.Schema.ObjectId, ref : 'Usuario'},
+   productOwner: {type : mongoose.Schema.ObjectId, ref : 'Usuario'},
+   equipoInvolucdrado: [{type : mongoose.Schema.ObjectId, ref : 'Usuario'}]
 });
 
 usuarioSchema.virtual("confirmarPassword").get(function(){
@@ -44,7 +44,11 @@ usuarioSchema.virtual("confirmarPassword").get(function(){
     this.otroPassword = contrasena;
 });
 
- 
+/*usuarioSchema.virtual("allProyects").get(function(){
+    return this.proyectos;
+}).set(function(proyectos){
+    this.proyectos = proyectos;
+})*/
 
 
 //var Usuario = mongoose.model("Usuario",usuarioSchema);

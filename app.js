@@ -92,7 +92,13 @@ app.get("/signup",function(req, res) {
 
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
+  Proyecto.find({proyectManager:req.session.user})
+    .populate("proyectManager")
+    .exec(function (err, usuario) {
+  if (err) console.log(String(err));
 
+  console.log(usuario);
+});
  /* if(req.session.rol==='desarrollador'){
       res.render("home/developer");
   }else if(req.session.rol==='scrum master'){
@@ -153,22 +159,36 @@ app.post("/sessions", function(req, res){
 
 app.post("/dashboard",function(req,res){
   console.log(req.body);
+  console.log(req.session.user);
   var proyecto = new Proyecto({
     
     nombreProyecto:req.body.nombreProyecto,
     fechaSolicitud:req.body.fechaSolicitud,
     fechaArranque:req.body.fechaArranque,
     descripcion:req.body.descripcion,
-    proyectManager:(req.session.user,null)
+    proyectManager:req.session.user
   });
   proyecto.save().then(function(proj){
+    console.log(proj._id);
+    Usuario.findByIdAndUpdate(req.session.user, { $set: { proyectos:proj._id }}, function (err, user) {
+    if (err) console.log(String(err));
+    console.log(user);
+    
+    Proyecto.findOne({nombreProyecto:proj.nombreProyecto})
+    .populate('proyectManager')
+    .exec(function (err, proyect) {
+  if (err) console.log(String(err));
+  console.log('The creator is %s', proyect.proyectManager.nombre);
+  // prints "The creator is Aaron"
+    });
+
+});
     res.redirect("dashboard");
     console.log("Se creo el proyecto-");
     console.log(proj);
   },function(err){
     console.log(String(err));
     console.log("Hubo un error");
-    
   })
 })
 
