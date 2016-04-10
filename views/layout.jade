@@ -1,27 +1,30 @@
 doctype html
 html(lang="es")
-
-
 head
-  
+  // Bloque de meta's.
   block meta
   meta(charset="utf-8")
   meta(http-equiv="X-UA-Compatible" content="IE=edge")
   meta(name="viewport" content="width=device-width, initial-scale=1")
   meta(name="apple-mobile-web-app-capable" content="yes")
+
+  // Bloque de links.
   block link
+  link(href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet")
+  link(href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet")  
   link(href="/styles/template/bootstrap.min.css" rel="stylesheet")
   link(href="/styles/template/bootstrap-responsive.min.css" rel="stylesheet")
-  link(href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet")
-  
+  link(href="/styles/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet")
   link(href="/styles/template/font-awesome.css" rel="stylesheet")
   link(href="/styles/template/style.css" rel="stylesheet")
   link(href="/styles/pages/dashboard.css" rel="stylesheet")
+  link(href="/styles/cards/rotating-card.css" rel="stylesheet")
+  
+  // Bloque de título.
   block title
   title #{titulo} | B&B Projects
 
 body
-
   block navbar-header
   div(class="navbar navbar-fixed-top")
     div(class="navbar-inner")
@@ -41,10 +44,10 @@ body
                 b(class="caret")
               ul(class="dropdown-menu")
                 li
-                  a(href="/profile") 
+                  a(href="#") 
                     |  Ver Perfil
                 li 
-                  a(href="javascript:;")
+                  a(href="#")
                     | Configurar cuenta
                 li
                   a(href="/") 
@@ -52,56 +55,57 @@ body
               
           form(class="navbar-search pull-right")
             input(type="text" class="search-query" placeholder="Buscar proyecto")
+
   block subnavbar-header
   div(class="subnavbar")
     div(class="subnavbar-inner")
       div(class="container")
         ul(class="mainnav")
           li(class="active")
-            a(href="index.html")
+            a(href="#")
               i(class="icon-dashboard")
               span Dashboard
-
           li
             a(href="#newProjectModal" data-toggle="modal")
               i(class="icon-tasks")
               span Crear proyecto
-            
           li
-            a(href="guidely.html")
+            a(href="#")
               i(class="icon-facetime-video")
               span App Tour
-              
           li
-            a(href="charts.html")
+            a(href="#")
               i(class="icon-bar-chart")
               span Charts
-              
           li
-            a(href="shortcodes.html")
+            a(href="#")
               i(class="icon-code")
               span Shortcodes
-              
           li(class="dropdown")
-            a(href="javascript:;" class="dropdown-toggle" data-toggle="dropdown")
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown")
               i(class="icon-long-arrow-down")
               span Drops
               b(class="caret")
             ul(class="dropdown-menu")
               li 
-                a(href="icons.html") Icons
+                a(href="#") Icons
               li
-                a(href="faq.html") FAQ
+                a(href="#") FAQ
               li
-                a(href="pricing.html") Pricing Plans
+                a(href="#") Pricing Plans
               li
-                a(href="login.html") Login
+                a(href="#") Login
               li
-                a(href="signup.html") Signup
+                a(href="#") Signup
               li
-                a(href="error.html") 404
+                a(href="#") 404
+
   block content
   div(class="main")
+    div(class="main-inner")
+      div(class="container")
+        include ./home/simple-cards.jade
+  
   block footer
   div(class="footer")
     div(class="footer-inner")
@@ -111,38 +115,53 @@ body
             a(href="http://www.egrappler.com/" class="text-center")  B&B Projects
   
   block newProjectModal
-  div(class="modal fade" tabindex="-1" role="dialog" id="newProjectModal")
-    div(class="modal-dialog modal-md")
-      div(class="modal-content")
-        div(class="modal-header")
-          button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-          h3 Nuevo proyecto
-
-        div(class="modal-body")
-          form(action="dashboard",method='POST')
-            div(class="form-group")
-              div(class="col-md-12")
-                label(for="nombreProyecto") Nombre del proyecto:
-                input(type="text" class="form-control" name="nombreProyecto" id="nombreProyecto")
-              div(class="form-group")
-                div(class="col-md-12")
-                  label(for="fechaSolicitud") Fecha de solicitud:
-                  input(type="text" class="form-control" name="fechaSolicitud" id="fechaSolicitud")
-              div(class="form-group")
-                div(class="col-md-12")
-                  label(for="fechaArranque") Fecha de arranque:
-                  input(type="text" class="form-control" name="fechaArranque" id="fechaArranque")
-              div(class="form-group")
-                div(class="col-md-12")
-                  label(for="descripcion") Descripción:
-                  input(type="text" class="form-control" name="descripcion" id="descripcion")        
-
-              div(class="modal-footer")
-                input(type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
-                input(type="submit" class="btn btn-primary" value="Crear") 
+  div(class="modal hide fade" tabindex="-1" role="dialog" id="newProjectModal" aria-labelledby="myModalLabel" aria-hidden="true")
+    div(class="modal-header")
+      button(type="button" class="close" data-dismiss="modal" aria-hidden="true") ×
+      h2 Crear nuevo proyecto
+    div(class="modal-body")
+      div(class="tab-content")
+        div(class="tab-pane active")
+          h3 Datos del Proyecto
+          form(class="form-horizontal" style="padding-top: 20px;")
+            fieldset
+              div(class="control-group")											
+                label(class="control-label" for="nombreProyecto") Nombre del proyecto:
+                div(class="controls")
+                  input(type="text" class="span4" id="nombreProyecto")
+              div(class="control-group date"  id="fechaSolicitudCalendario")										
+                label(class="control-label" for="fechaSolicitud") Fecha de solicitud:
+                div(class="controls")
+                  div(class="input-prepend input-append")
+                    input(class="span2" type="text")
+                    span(class="add-on")
+                      i(class="icon-calendar")
+              div(class="control-group date" id="fechaInicioCalendario")										
+                label(class="control-label" for="fechaInicio") Fecha de inicio:
+                div(class="controls")
+                  div(class="input-prepend input-append")
+                    input(class="span2" id="fechaInicio" type="text")
+                    span(class="add-on")
+                      i(class="icon-calendar")
+              div(class="control-group")											
+                label(class="control-label" for="Descripcion") Descripción:
+                div(class="controls")
+                  textarea(class="span4" rows="5")
+    div(class="modal-footer")
+      button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
+      button(class="btn btn-primary") Crear Proyecto
     
   block script
   script(src="/js/template/jquery-1.7.2.min.js") 
   script(src="/js/template/excanvas.min.js") 
   script(src="/js/template/bootstrap.js")
   script(src="/js/template/base.js") 
+  script(ser="/js/datetimepicker/moments.js")
+  script(ser="/js/datetimepicker/bootstrap-datetimepicker.min.js")
+  
+  //script.
+  //  $(document).ready(function() {
+  //    $('#fechaSolicitudCalendario').datepicker({
+  //      locale: 'es'
+  //    });
+  //  });
