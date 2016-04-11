@@ -19,6 +19,8 @@ head
   link(href="/styles/template/style.css" rel="stylesheet")
   link(href="/styles/pages/dashboard.css" rel="stylesheet")
   link(href="/styles/cards/rotating-card.css" rel="stylesheet")
+  link(rel="stylesheet" type="text/css" href="/styles/style5.css")
+  link(href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css')
   
   // Bloque de título.
   block title
@@ -69,42 +71,48 @@ body
             a(href="#newProjectModal" data-toggle="modal")
               i(class="icon-tasks")
               span Crear proyecto
-          li
-            a(href="#")
-              i(class="icon-facetime-video")
-              span App Tour
-          li
-            a(href="#")
-              i(class="icon-bar-chart")
-              span Charts
-          li
-            a(href="#")
-              i(class="icon-code")
-              span Shortcodes
-          li(class="dropdown")
-            a(href="#" class="dropdown-toggle" data-toggle="dropdown")
-              i(class="icon-long-arrow-down")
-              span Drops
-              b(class="caret")
-            ul(class="dropdown-menu")
-              li 
-                a(href="#") Icons
-              li
-                a(href="#") FAQ
-              li
-                a(href="#") Pricing Plans
-              li
-                a(href="#") Login
-              li
-                a(href="#") Signup
-              li
-                a(href="#") 404
+          //li
+          //  a(href="#")
+          //    i(class="icon-facetime-video")
+          //    span App Tour
+          //li
+          //  a(href="#")
+          //    i(class="icon-bar-chart")
+          //    span Charts
+          //li
+          //  a(href="#")
+          //    i(class="icon-code")
+          //    span Shortcodes
+          //li(class="dropdown")
+          //  a(href="#" class="dropdown-toggle" data-toggle="dropdown")
+          //    i(class="icon-long-arrow-down")
+          //    span Drops
+          //    b(class="caret")
+          //  ul(class="dropdown-menu")
+          //    li 
+          //      a(href="#") Icons
+          //    li
+          //      a(href="#") FAQ
+          //    li
+          //      a(href="#") Pricing Plans
+          //    li
+          //      a(href="#") Login
+          //    li
+          //      a(href="#") Signup
+          //    li
+          //      a(href="#") 404
 
   block content
-  
+  div(style="position: absolute; left:50%; top:50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%);")
+    div(class="button-wrapper")
+      a(href="#" class="a-btn")
+        span(class="a-btn-symbol") Z
+        span(class="a-btn-text") Sin proyectos
+        span(class="a-btn-slide-text") Crea tu primer proyecto
+        span(class="a-btn-slide-icon")
   
   block footer
-  div(class="footer")
+  div(class="footer" style="position: absolute; bottom: 0px; width:100%;")
     div(class="footer-inner")
       div(class="container")
         div(class="row")
