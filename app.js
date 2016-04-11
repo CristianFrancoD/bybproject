@@ -17,7 +17,7 @@ var user = new ConnectRoles({
 
 // Se le indica a express que se debe utilizar el directorio public.
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
 
@@ -31,20 +31,20 @@ app.use(user.middleware());
 user.use("anonymousUser",function(req) {
     if(req.session.hasOwnProperty("user")){
       console.log("No es anonimo");
-    return true;  
+    return true;
     }
 })
 
 
 user.use("scrum-master",function(req){
   console.log(req.session.user);
-  
+
     if(req.session.rol ==='scrum master'){
       console.log("entro scrum");
-    return true;  
-    
-    
-    
+    return true;
+
+
+
   }
 })
 
@@ -53,25 +53,25 @@ user.use("product-owner",function(req){
 
     if(req.session.rol ==='product owner'){
       console.log("entro");
-    return true;  
+    return true;
     }
-    
+
 })
 
 user.use("desarrollador",function(req){
   console.log("Entro en funcion desarrollador")
     console.log(req.session.user);
-  
+
     if(req.session.rol ==='desarrollador'){
       console.log("entro developer");
-      return true;  
+      return true;
   }
-  
+
 })
 
 app.get("/",function(req, res){
   res.render("landing");
- 
+
 });
 
 
@@ -95,7 +95,7 @@ app.get("/signup",function(req, res) {
 
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
-  
+
   Proyecto.count({proyectManager:req.session.user},function(err,count){
     if(count!=0){
       console.log("Numero de proyectos",count);
@@ -103,9 +103,9 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
     }
     res.render("layout");
   })
-  
-    
-   
+
+
+
 });
 
 
@@ -127,10 +127,10 @@ app.get("/proyect",user.can("anonymousUser"),user.can("product-owner"),function(
 });
 
 app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
-  
+
     res.render("prodBacklog");
-  
-    
+
+
 });
 
 app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
@@ -144,7 +144,7 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
         console.log(proyecto);
         for(var val in proyecto) {
            data.push(proyecto[val])
-          
+
         }
         console.log(data);
        res.render("home/simple-cards",{
@@ -155,23 +155,23 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
 
 
 app.get("/profile",user.can("anonymousUser"),function(req,res){
-  
+
     res.render("profile");
-  
-    
+
+
 });
 
 app.get("/editProfile",user.can("anonymousUser"),function(req,res){
-  
+
     res.render("editProfile");
-  
-    
+
+
 });
 
 app.post("/signup", function(req,res){
-  
-var usuario = new Usuario({ 
-nombre: req.body.nombre, 
+
+var usuario = new Usuario({
+nombre: req.body.nombre,
 apellidoP: req.body.apellidoP,
 apellidoM: req.body.apellidoM,
 email: req.body.email,
@@ -207,7 +207,7 @@ app.post("/dashboard",function(req,res){
   console.log(req.body);
   console.log(req.session.user);
   var proyecto = new Proyecto({
-    
+
     nombreProyecto:req.body.nombreProyecto,
     fechaSolicitud:req.body.fechaSolicitud,
     fechaArranque:req.body.fechaArranque,
@@ -230,6 +230,20 @@ app.post("/dashboard",function(req,res){
   })
 })
 
+// Agregar PO.
+// Agregar Developers.
+// Eliminar proyecto.
+app.post("/addpo", function(req, res) {
+  res.render("addProjectOwners");
+});
+
+app.post("/adddev", function(req, res) {
+  res.render("addDevelopers");
+});
+
+app.post("/delProject", function(req, res) {
+  res.render("deleteProject");
+});
 
 
 
