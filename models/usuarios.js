@@ -49,7 +49,9 @@ usuarioSchema.virtual("confirmarPassword").get(function(){
 }).set(function(proyectos){
     this.proyectos = proyectos;
 })*/
-
+usuarioSchema.virtual("nombreCompleto").get(function(){
+    return this.nombre + " " + this.apellidoP+" "+this.apellidoM;
+})
 
 //var Usuario = mongoose.model("Usuario",usuarioSchema);
 module.exports ={ 

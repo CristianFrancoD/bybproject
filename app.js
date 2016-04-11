@@ -241,6 +241,25 @@ app.post("/adddev", function(req, res) {
   res.render("addDevelopers");
 });
 
+app.post("/adddev/:_idProy",user.can("anonymousUser"), function(req, res) {
+  var dataUser = [];
+  console.log(req.params._idProy);
+  Usuario.find()
+  .populate('proyectos')
+  .exec(function(err,users){
+    for(var i in users){
+      dataUser.push(users[i]);
+    }
+    console.log(dataUser[1].nombreCompleto);
+    console.log(String(err));
+  
+  
+  res.render("addDevelopers",{
+    users:dataUser
+  });
+  })
+});
+
 app.post("/delProject", function(req, res) {
   res.render("deleteProject");
 });

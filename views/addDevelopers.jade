@@ -13,12 +13,13 @@ div(id="agregarDevelopers" class="modal hide fade" tabindex="-1" role="dialog" a
             tr
               th Nombre completo 
               th(class="td-actions") Agregar
-          tbody
-            tr
-              td Nombre del Developer 
-              td(class="td-actions")
-                a(href="#" class="btn btn-small btn-success")
-                  i(class="btn-icon-only icon-ok")
+          each user in users
+            tbody
+              tr
+                td #{user.nombreCompleto} 
+                td(class="td-actions")
+                  a(href="#" class="btn btn-small btn-success") Agregar
+                    i(class="btn-icon-only icon-ok")
   div(class="modal-footer")
     button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
     input(type="submit" class="btn btn-primary" value="Guardar" name="sabeDev")
