@@ -138,6 +138,7 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
     Proyecto
       .find({proyectManager:req.session.user})
       .populate('proyectManager')
+      .populate('equipoInvolucdrado')
       .exec(function (err, proyecto) {
       if (err) console.log(String(err));
         console.log("ALTO");
@@ -146,7 +147,7 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
            data.push(proyecto[val])
 
         }
-        console.log(data);
+        
        res.render("home/simple-cards",{
         proyecto:data
       });
@@ -190,6 +191,19 @@ console.log("Se guardo el usuario");
 });
 
 });
+
+
+
+app.post("/agregarDesarrolador/:idUsuario/:idProy", function(req,res){
+    res.render("home/agregarDesarrolador");
+    console.log(req.params.idProy);
+    console.log(req.params.idUsuario);
+   Proyecto.findByIdAndUpdate(req.params.idProy, { $set : {equipoInvolucdrado:req.params.idUsuario}},function(err,proyecto){
+       if(err)console.log(String(err));
+       console.log(proyecto);
+   })
+});
+
 
 
 app.post("/sessions", function(req, res){
@@ -250,12 +264,13 @@ app.post("/adddev/:_idProy",user.can("anonymousUser"), function(req, res) {
     for(var i in users){
       dataUser.push(users[i]);
     }
-    console.log(dataUser[1].nombreCompleto);
+    
     console.log(String(err));
   
   
   res.render("addDevelopers",{
-    users:dataUser
+    users:dataUser,
+    idProy:req.params._idProy
   });
   })
 });

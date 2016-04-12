@@ -35,7 +35,7 @@ proyectosSchema.add({
    descripcion: String,
    proyectManager: {type : mongoose.Schema.ObjectId, ref : 'Usuario'},
    productOwner: {type : mongoose.Schema.ObjectId, ref : 'Usuario'},
-   equipoInvolucdrado: [{type : mongoose.Schema.ObjectId, ref : 'Usuario'}]
+   equipoInvolucdrado: {type : mongoose.Schema.ObjectId, ref : 'Usuario'}
 });
 
 usuarioSchema.virtual("confirmarPassword").get(function(){
