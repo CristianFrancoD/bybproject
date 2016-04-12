@@ -136,7 +136,7 @@ app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
 app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
    var data = [];
     Proyecto
-      .find({$or:[{proyectManager:req.session.user},{equipoInvolucdrado:req.session.user}]})
+      .find({$or:[{proyectManager:req.session.user},{equipoInvolucdrado:req.session.user},{productOwner:req.session.user}]})
       .populate('proyectManager')
       .populate('equipoInvolucdrado')
       .populate('productOwner')
