@@ -26,13 +26,17 @@ block content
                         div(class="message_wrap") 
                           span(class="arrow")
                           div(class="info")
-                            h3 Scrum Master: #{proyect.proyectManager.nombre}
+                            h3 Scrum Master: #{proyect.proyectManager.nombreCompleto}
                           div(class="text") 
                             h4 #{proyect.nombreProyecto}
                             div(style="padding-top: 10px;")
                               p Fecha de solicitud: #{proyect.fechaSolicitud}
                               p Fecha de inicio: #{proyect.fechaArranque}
                               p Descripción del proyecto: #{proyect.descripcion}
+                              if proyect.equipoInvolucdrado
+                                p Equipo de Desarrollo: #{proyect.equipoInvolucdrado.nombreCompleto}
+                              else
+                                p No tienes agregado a nadie en tu equipo de desarrollo
                             div
                               form(method="post" action="/addpo")
                                 input(type="submit" class="btn btn-primary" value="Asignar Project Owner" name="addPO")
