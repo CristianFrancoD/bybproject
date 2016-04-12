@@ -139,6 +139,7 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
       .find({$or:[{proyectManager:req.session.user},{equipoInvolucdrado:req.session.user}]})
       .populate('proyectManager')
       .populate('equipoInvolucdrado')
+      .populate('productOwner')
       .exec(function (err, proyecto) {
       if (err) console.log(String(err));
         console.log("ALTO");
@@ -204,6 +205,15 @@ app.post("/agregarDesarrolador/:idUsuario/:idProy", function(req,res){
    })
 });
 
+app.post("/agregarPO/:idUsuario/:idProy", function(req,res){
+    res.render("home/agregarDesarrolador");
+    console.log(req.params.idProy);
+    console.log(req.params.idUsuario);
+   Proyecto.findByIdAndUpdate(req.params.idProy, { $set : {productOwner:req.params.idUsuario}},function(err,proyecto){
+       if(err)console.log(String(err));
+       console.log(proyecto);
+   })
+});
 
 
 app.post("/sessions", function(req, res){
@@ -247,8 +257,24 @@ app.post("/dashboard",function(req,res){
 // Agregar PO.
 // Agregar Developers.
 // Eliminar proyecto.
-app.post("/addpo", function(req, res) {
-  res.render("addProjectOwners");
+app.post("/addpo/:_idProy", function(req, res) {
+  var dataUser = [];
+  console.log(req.params._idProy);
+  Usuario.find()
+  .populate('proyectos')
+  .exec(function(err,users){
+    for(var i in users){
+      dataUser.push(users[i]);
+    }
+    
+    console.log(String(err));
+  
+  
+  res.render("addProjectOwners",{
+    users:dataUser,
+    idProy:req.params._idProy
+  });
+  })
 });
 
 app.post("/adddev", function(req, res) {

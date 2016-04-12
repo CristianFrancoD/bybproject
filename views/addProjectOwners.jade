@@ -14,12 +14,14 @@ div(id="agregarProjectOwner" class="modal hide fade" tabindex="-1" role="dialog"
             tr
               th Nombre completo 
               th(class="td-actions") Agregar
-          tbody
-            tr
-              td Nombre del Project Owner 
-              td(class="td-actions")
-                a(href="#" class="btn btn-small btn-success")
-                  i(class="btn-icon-only icon-ok")
+          each user in users
+            tbody
+              tr
+                td #{user.nombreCompleto} 
+                td(class="td-actions")
+                  form(action="/agregarPO/#{user._id}/#{idProy}", method="POST")
+                    input(type="submit" class="btn btn-primary" value="agregar" name="agregarDes")
+                    i(class="btn-icon-only icon-ok")
   div(class="modal-footer")
     button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
     input(type="submit" class="btn btn-primary" value="Guardar" name="savePO")

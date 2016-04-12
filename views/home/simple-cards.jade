@@ -37,8 +37,12 @@ block content
                                 p Equipo de Desarrollo: #{proyect.equipoInvolucdrado.nombreCompleto}
                               else
                                 p No tienes agregado a nadie en tu equipo de desarrollo
+                              if proyect.productOwner
+                                p Product Owner: #{proyect.productOwner.nombreCompleto}
+                              else
+                                p Aun no tienes a tu Product Owner
                             div
-                              form(method="post" action="/addpo")
+                              form(method="post" action="/addpo/#{proyect._id}")
                                 input(type="submit" class="btn btn-primary" value="Asignar Project Owner" name="addPO")
                               form(method="post" action="/adddev/#{proyect._id}")  
                                 input(type="submit" class="btn btn-success" value="Asignar Developers" name="addDev") 
