@@ -196,22 +196,28 @@ console.log("Se guardo el usuario");
 
 
 app.post("/agregarDesarrolador/:idUsuario/:idProy", function(req,res){
-    res.render("home/agregarDesarrolador");
     console.log(req.params.idProy);
     console.log(req.params.idUsuario);
    Proyecto.findByIdAndUpdate(req.params.idProy, { $set : {equipoInvolucdrado:req.params.idUsuario}},function(err,proyecto){
-       if(err)console.log(String(err));
-       console.log(proyecto);
+        if(err){
+         console.log(String(err));
+       }else{
+          console.log(proyecto);
+          res.redirect("/simple-cards"); 
+       }
    })
 });
 
 app.post("/agregarPO/:idUsuario/:idProy", function(req,res){
-    res.render("home/agregarDesarrolador");
     console.log(req.params.idProy);
     console.log(req.params.idUsuario);
    Proyecto.findByIdAndUpdate(req.params.idProy, { $set : {productOwner:req.params.idUsuario}},function(err,proyecto){
-       if(err)console.log(String(err));
-       console.log(proyecto);
+       if(err){
+         console.log(String(err));
+       }else{
+          console.log(proyecto);
+          res.redirect("/simple-cards"); 
+       }
    })
 });
 
@@ -260,7 +266,7 @@ app.post("/dashboard",function(req,res){
 app.post("/addpo/:_idProy", function(req, res) {
   var dataUser = [];
   console.log(req.params._idProy);
-  Usuario.find()
+  Usuario.find({_id:{$ne:req.session.user}})
   .populate('proyectos')
   .exec(function(err,users){
     for(var i in users){
@@ -284,7 +290,7 @@ app.post("/adddev", function(req, res) {
 app.post("/adddev/:_idProy",user.can("anonymousUser"), function(req, res) {
   var dataUser = [];
   console.log(req.params._idProy);
-  Usuario.find()
+  Usuario.find({_id:{$ne:req.session.user}})
   .populate('proyectos')
   .exec(function(err,users){
     for(var i in users){
