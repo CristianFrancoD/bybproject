@@ -96,7 +96,8 @@ app.get("/signup",function(req, res) {
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
 
-  Proyecto.count({proyectManager:req.session.user},function(err,count){
+  Proyecto.count({$or:[{proyectManager:req.session.user},{equipoInvolucdrado:req.session.user},{productOwner:req.session.user}]},function(err,count){
+    if(err)console.log(String(err));
     if(count!=0){
       console.log("Numero de proyectos",count);
        res.redirect("/simple-cards")
@@ -198,7 +199,7 @@ console.log("Se guardo el usuario");
 app.post("/agregarDesarrolador/:idUsuario/:idProy", function(req,res){
     console.log(req.params.idProy);
     console.log(req.params.idUsuario);
-   Proyecto.findByIdAndUpdate(req.params.idProy, { $set : {equipoInvolucdrado:req.params.idUsuario}},function(err,proyecto){
+   Proyecto.findByIdAndUpdate(req.params.idProy, { $push : {equipoInvolucdrado:req.params.idUsuario}},function(err,proyecto){
         if(err){
          console.log(String(err));
        }else{
