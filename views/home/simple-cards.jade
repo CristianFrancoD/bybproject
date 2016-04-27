@@ -51,11 +51,11 @@ block content
                                     input(type="submit" class="btn btn-success" value="Asignar Developers" name="addDev") 
                                   form(method="post" action="/delProject/#{proyect._id}")  
                                     input(type="submit" class="btn btn-danger" value="Eliminar proyecto" name="delDP")
-                                  form(method="post" action="/backlog/#{proyect._id}")  
+                                  form(method="get" action="/backlog/#{proyect._id}")  
                                     input(type="submit" class="btn btn-danger" value="Ir al backlog" name="backlog")
                               else
                                 div
-                                  form(method="post" action="/backlog/#{proyect._id}")  
+                                  form(method="get" action="/backlog/#{proyect._id}")  
                                     input(type="submit" class="btn btn-danger" value="Ir al backlog" name="delDP")
 
 block footer

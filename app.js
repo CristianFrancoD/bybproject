@@ -1,6 +1,9 @@
 var express = require("express");
 var http = require("http");
 var ConnectRoles = require("connect-roles");
+var flash = require('connect-flash');
+var passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy;
 var app = express();
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
@@ -27,6 +30,25 @@ saveUninittialized:false
 }));
 
 app.use(user.middleware());
+app.use(passport.initialize());
+app.use(flash());
+
+passport.use(new LocalStrategy({
+  usernameField : 'email',
+  passwordField : 'contra'
+},
+  function(username, password, done) {
+    Usuario.findOne({$and:[{email: username },{contrasena:password}]}, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        console.log("usuario no valido");
+        return done(null, false, { message: 'Usuario/contraseña no validos.' });
+      }
+      console.log("usuario valido");
+      return done(null, user);
+    });
+  }
+));
 
 user.use("anonymousUser",function(req) {
     if(req.session.hasOwnProperty("user")){
@@ -173,9 +195,10 @@ app.get("/editProfile",user.can("anonymousUser"),function(req,res){
 });
 
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
+  console.log("Entro al backlog")
 var data = [];
   Backlog
-    .find({})
+    .find()
     .populate('proyectos')
     .exec(function (err, backlog) {
     if (err) console.log(String(err));
@@ -292,17 +315,17 @@ app.post("/agregarPO/:idUsuario/:idProy", function(req,res){
 });
 
 
-app.post("/sessions", function(req, res){
-    Usuario.findOne({email:req.body.email, contrasena:req.body.contra},function(err,user){
-
-      req.session.user = user._id;
-      req.session.rol = user.rol;
-      //var userActual = req.session.user;
-       console.log(req.session.user);
-
-      res.redirect("/dashboard");
-    });
-});
+app.post("/sessions", 
+  passport.authenticate('local',{
+      failureRedirect: '/login',
+      failureFlash: true,
+      session:false
+}),function(req ,res){
+    req.session.user = req.user._id;
+    //req.session.rol = req.user.rol;
+    res.redirect("/dashboard");
+    console.log(req.user.nombreCompleto);
+  });
 
 app.post("/dashboard",function(req,res){
   console.log(req.body);
