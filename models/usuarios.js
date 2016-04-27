@@ -6,7 +6,7 @@ ObjectId = Schema.ObjectId;
 var usuarioSchema = new Schema();
 var rolSchema = new Schema();
 var proyectosSchema = new Schema();
-
+var backlogSchema = new Schema();
  usuarioSchema.add({
 id:ObjectId,
 nombre: String,
@@ -35,11 +35,24 @@ proyectosSchema.add({
    descripcion: String,
    proyectManager: {type : mongoose.Schema.ObjectId, ref : 'Usuario'},
    productOwner: {type : mongoose.Schema.ObjectId, ref : 'Usuario'},
-   equipoInvolucdrado: [{ type:mongoose.Schema.ObjectId ,ref: 'Usuario'}]
+   equipoInvolucdrado: [{ type:mongoose.Schema.ObjectId ,ref: 'Usuario'}],
+
 });
 
+
+backlogSchema.add({
+  id:Schema.ObjectId,
+  tiempoEstimado:String,
+  prioridad: String,
+  estado: String,
+  creadorTarjeta: String,
+  descripcion: String,
+  proyectos:[ {type : mongoose.Schema.ObjectId, ref : 'Proyecto'}]
+});
+
+
 usuarioSchema.virtual("confirmarPassword").get(function(){
-   return this.otroPassword; 
+   return this.otroPassword;
 }).set(function(contrasena){
     this.otroPassword = contrasena;
 });
@@ -54,8 +67,8 @@ usuarioSchema.virtual("nombreCompleto").get(function(){
 })
 
 //var Usuario = mongoose.model("Usuario",usuarioSchema);
-module.exports ={ 
+module.exports ={
     Usuario: mongoose.model('Usuario',usuarioSchema),
-    Rol: mongoose.model('Rol',rolSchema),
+    Backlog: mongoose.model('Backlog',backlogSchema),
     Proyecto: mongoose.model('Proyecto',proyectosSchema)
 };

@@ -43,13 +43,20 @@ block content
                                 p Product Owner: #{proyect.productOwner.nombreCompleto}
                               else
                                 p Aun no tienes a tu Product Owner
-                            div
-                              form(method="post" action="/addpo/#{proyect._id}")
-                                input(type="submit" class="btn btn-primary" value="Asignar Project Owner" name="addPO")
-                              form(method="post" action="/adddev/#{proyect._id}")  
-                                input(type="submit" class="btn btn-success" value="Asignar Developers" name="addDev") 
-                              form(method="post" action="/delProject")  
-                                input(type="submit" class="btn btn-danger" value="Eliminar proyecto" name="delDP")
+                              if usuarioActual == proyect.proyectManager._id
+                                div
+                                  form(method="post" action="/addpo/#{proyect._id}")
+                                    input(type="submit" class="btn btn-primary" value="Asignar Project Owner" name="addPO")
+                                  form(method="post" action="/adddev/#{proyect._id}")  
+                                    input(type="submit" class="btn btn-success" value="Asignar Developers" name="addDev") 
+                                  form(method="post" action="/delProject/#{proyect._id}")  
+                                    input(type="submit" class="btn btn-danger" value="Eliminar proyecto" name="delDP")
+                                  form(method="post" action="/backlog/#{proyect._id}")  
+                                    input(type="submit" class="btn btn-danger" value="Ir al backlog" name="backlog")
+                              else
+                                div
+                                  form(method="post" action="/backlog/#{proyect._id}")  
+                                    input(type="submit" class="btn btn-danger" value="Ir al backlog" name="delDP")
 
 block footer
 

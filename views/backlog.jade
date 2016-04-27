@@ -1,0 +1,19 @@
+extends ./layout.jade
+
+block meta
+block link
+block title
+block navbar-header
+block subnavbar-header
+
+block content
+    div(class="well col-lg-4" style="border:'thin'")
+        h3 Historia de usuario
+        p Descripcion aqui
+        label(class="label label-info") Prioridad
+        label(class="label label-info") Tamaño
+        form(method="get" action="/addBacklog/#{idProy}")  
+          input(type="submit" class="btn btn-danger" value="Crear backlog" name="addBack")
+block footer
+
+block script

@@ -4,7 +4,7 @@ var ConnectRoles = require("connect-roles");
 var app = express();
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
-var Rol = require("./models/usuarios").Rol;
+var Backlog = require("./models/usuarios").Backlog;
 var Proyecto = require("./models/usuarios").Proyecto;
 var session = require("express-session");
 app.set("view engine","jade");
@@ -149,9 +149,10 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
            data.push(proyecto[val])
 
         }
-        
+
        res.render("home/simple-cards",{
-        proyecto:data
+        proyecto:data,
+        usuarioActual:req.session.user
       });
 })
 })
@@ -168,6 +169,74 @@ app.get("/editProfile",user.can("anonymousUser"),function(req,res){
 
     res.render("editProfile");
 
+
+});
+
+app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
+var data = [];
+  Backlog
+    .find({})
+    .populate('proyectos')
+    .exec(function (err, backlog) {
+    if (err) console.log(String(err));
+      console.log("Buscando backlog");
+      console.log(backlog);
+      for(var val in backlog) {
+         data.push(backlog[val])
+
+      }
+    res.render("backlog",{
+      backlog:data,
+      idProy:req.params.idProy
+    });
+
+
+});
+});
+
+app.get("/backlog",user.can("anonymousUser"),function(req,res){
+
+    res.render("backlog");
+
+});
+
+app.get("/addBacklog/:idProy",user.can("anonymousUser"),function(req,res){
+  console.log(req.params.idProy);
+    res.render("addBacklog",{
+      idProy:req.params.idProy
+    });
+
+});
+
+app.post("/addbacklog/:idProy",function(req,res){
+
+
+var backlog = new Backlog({
+
+tiempoEstimado: req.body.tiempo,
+prioridad: req.body.prioridad,
+estado: req.body.estado,
+creadorTarjeta: req.body.creador,
+descripcion: req.body.descripcion,
+proyectos: req.params.idProy
+});
+backlog.save().then(function(us){
+res.redirect("/backlog/")
+console.log("Se guardo el backlog");
+
+},function(err){
+
+  console.log(String(err));
+  console.log("Hubo un error al guarda el backlog")
+
+});
+});
+
+app.post("/backlog/:idProy",function(req,res){
+  console.log(req.params.idProy);
+  res.render("backlog",{
+    idProy:req.params.idProy
+  });
 
 });
 
@@ -204,7 +273,7 @@ app.post("/agregarDesarrolador/:idUsuario/:idProy", function(req,res){
          console.log(String(err));
        }else{
           console.log(proyecto);
-          res.redirect("/simple-cards"); 
+          res.redirect("/simple-cards");
        }
    })
 });
@@ -217,7 +286,7 @@ app.post("/agregarPO/:idUsuario/:idProy", function(req,res){
          console.log(String(err));
        }else{
           console.log(proyecto);
-          res.redirect("/simple-cards"); 
+          res.redirect("/simple-cards");
        }
    })
 });
@@ -228,8 +297,9 @@ app.post("/sessions", function(req, res){
 
       req.session.user = user._id;
       req.session.rol = user.rol;
+      //var userActual = req.session.user;
        console.log(req.session.user);
- //      console.log(req.session.rol);
+
       res.redirect("/dashboard");
     });
 });
@@ -273,10 +343,10 @@ app.post("/addpo/:_idProy", function(req, res) {
     for(var i in users){
       dataUser.push(users[i]);
     }
-    
+
     console.log(String(err));
-  
-  
+
+
   res.render("addProjectOwners",{
     users:dataUser,
     idProy:req.params._idProy
@@ -297,10 +367,10 @@ app.post("/adddev/:_idProy",user.can("anonymousUser"), function(req, res) {
     for(var i in users){
       dataUser.push(users[i]);
     }
-    
+
     console.log(String(err));
-  
-  
+
+
   res.render("addDevelopers",{
     users:dataUser,
     idProy:req.params._idProy
@@ -308,9 +378,16 @@ app.post("/adddev/:_idProy",user.can("anonymousUser"), function(req, res) {
   })
 });
 
-app.post("/delProject", function(req, res) {
-  res.render("deleteProject");
+//Funcion que elimina un proyecto seleccionado
+app.post("/delProject/:idProy", function(req, res) {
+  console.log(req.params.idProy);
+  Proyecto.remove({_id:req.params.idProy}, function(err,removed) {
+    res.redirect("/dashboard");
+
 });
+
+});
+
 
 
 
