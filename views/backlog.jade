@@ -7,13 +7,18 @@ block navbar-header
 block subnavbar-header
 
 block content
-    div(class="well col-lg-4" style="border:'thin'")
-        h3 Historia de usuario
-        p Descripcion aqui
-        label(class="label label-info") Prioridad
-        label(class="label label-info") Tamaño
-        form(method="get" action="/addBacklog/#{idProy}")  
-          input(type="submit" class="btn btn-danger" value="Crear backlog" name="addBack")
+    h1 Historias
+        div(ng-show="!userHistorys.length") No hay historias de usuario
+        div(class="row" ng-repeat="item in userHistorys")
+            div(class="well col-lg-4" style="border:'thin'")
+                h3 Historia de usuario
+                p {{item.estado}}
+                label(class="label label-info") {{item.prioridad}}
+                label(class="label label-info") {{item.tiempoEstimado}}
+                form(method="get" action="/addBacklog/#{idProy}")  
+                  input(type="submit" class="btn btn-danger" value="Crear backlog" name="addBack")
+            
+        div(ng-bind="mensaje"){{mensaje}}
 block footer
 
 block script

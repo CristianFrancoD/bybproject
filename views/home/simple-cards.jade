@@ -7,57 +7,57 @@ block navbar-header
 block subnavbar-header
 
 block content
-  each proyect in proyecto
-    div(class="main")
-      div(class="main-inner")
-        div(class="container")
-          div(class="row")
-            div(class="span12")
-              div(class="widget widget-nopad")
-                div(class="widget-header")
-                  i(class="icon-list-alt")
-                  h3 Tarjetas de proyectos
-                div(class="widget-content")
-                  div(class="widget big-stats-container" style="padding: 15px;")
-                    ul(class="messages_layout")
-                      li(class="from_user left")
-                        a(href="#" class="avatar")
-                          img(src="../images/message_avatar1.png")
-                        div(class="message_wrap") 
-                          span(class="arrow")
-                          div(class="info")
-                            h3 Scrum Master: #{proyect.proyectManager.nombreCompleto}
-                          div(class="text") 
-                            h4 #{proyect.nombreProyecto}
-                            div(style="padding-top: 10px;")
-                              p Fecha de solicitud: #{proyect.fechaSolicitud}
-                              p Fecha de inicio: #{proyect.fechaArranque}
-                              p Descripción del proyecto: #{proyect.descripcion}
-                              if proyect.equipoInvolucdrado.length != 0
-                                p Equipo de Desarrollo:
-                                each desarrollador in proyect.equipoInvolucdrado
-                                  p #{desarrollador.nombreCompleto}
-                              else
-                                p No tienes agregado a nadie en tu equipo de desarrollo
-                              if proyect.productOwner
-                                p Product Owner: #{proyect.productOwner.nombreCompleto}
-                              else
-                                p Aun no tienes a tu Product Owner
-                              if usuarioActual == proyect.proyectManager._id
-                                div
-                                  form(method="post" action="/addpo/#{proyect._id}")
-                                    input(type="submit" class="btn btn-primary" value="Asignar Project Owner" name="addPO")
-                                  form(method="post" action="/adddev/#{proyect._id}")  
-                                    input(type="submit" class="btn btn-success" value="Asignar Developers" name="addDev") 
-                                  form(method="post" action="/delProject/#{proyect._id}")  
-                                    input(type="submit" class="btn btn-danger" value="Eliminar proyecto" name="delDP")
-                                  form(method="get" action="/backlog/#{proyect._id}")  
-                                    input(type="submit" class="btn btn-danger" value="Ir al backlog" name="backlog")
-                              else
-                                div
-                                  form(method="get" action="/backlog/#{proyect._id}")  
-                                    input(type="submit" class="btn btn-danger" value="Ir al backlog" name="delDP")
-
+    div(ng-bind="mensaje"){{mensaje}}
+    each proyect in proyecto
+      div(class="main")
+        div(class="main-inner")
+          div(class="container")
+            div(class="row")
+              div(class="span12")
+                div(class="widget widget-nopad")
+                  div(class="widget-header")
+                    i(class="icon-list-alt")
+                    h3 Tarjetas de proyectos
+                  div(class="widget-content")
+                    div(class="widget big-stats-container" style="padding: 15px;")
+                      ul(class="messages_layout")
+                        li(class="from_user left")
+                          a(href="#" class="avatar")
+                            img(src="../images/message_avatar1.png")
+                          div(class="message_wrap") 
+                            span(class="arrow")
+                            div(class="info")
+                              h3 Scrum Master: #{proyect.proyectManager.nombreCompleto}
+                            div(class="text") 
+                              h4 #{proyect.nombreProyecto} {{4+5}}
+                              div(style="padding-top: 10px;")
+                                p Fecha de solicitud: #{proyect.fechaSolicitud}
+                                p Fecha de inicio: #{proyect.fechaArranque}
+                                p Descripción del proyecto: #{proyect.descripcion}
+                                if proyect.equipoInvolucdrado.length != 0
+                                  p Equipo de Desarrollo:
+                                  each desarrollador in proyect.equipoInvolucdrado
+                                    p #{desarrollador.nombreCompleto}
+                                else
+                                  p No tienes agregado a nadie en tu equipo de desarrollo
+                                if proyect.productOwner
+                                  p Product Owner: #{proyect.productOwner.nombreCompleto}
+                                else
+                                  p Aun no tienes a tu Product Owner
+                                if usuarioActual == proyect.proyectManager._id
+                                  div
+                                    form(method="post" action="/addpo/#{proyect._id}")
+                                      input(type="submit" class="btn btn-primary" value="Asignar Project Owner" name="addPO")
+                                    form(method="post" action="/adddev/#{proyect._id}")  
+                                      input(type="submit" class="btn btn-success" value="Asignar Developers" name="addDev") 
+                                    form(method="post" action="/delProject/#{proyect._id}")  
+                                      input(type="submit" class="btn btn-danger" value="Eliminar proyecto" name="delDP")
+                                    form(method="get" action="/backlog/#{proyect._id}")  
+                                      input(ng-click="getUserHistory('#{proyect._id}')" type="submit" class="btn btn-danger"  value="Ir al backlog" name="backlog")
+                                else
+                                  div
+                                    form(method="get" action="/backlog/#{proyect._id}")  
+                                      input( ng-click="getUserHistory(#{proyect._id})" type="submit" class="btn btn-danger"  value="Ir al backlog" name="delDP")
 block footer
 
 block script

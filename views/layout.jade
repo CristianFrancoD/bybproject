@@ -1,5 +1,5 @@
 doctype html
-html(lang="es")
+html(ng-app="bybApp")
 head
   // Bloque de meta's.
   block meta
@@ -26,7 +26,7 @@ head
   block title
   title #{titulo} | B&B Projects
 
-body
+body(ng-controller="backlogCtrl")
   block navbar-header
   div(class="navbar navbar-fixed-top")
     div(class="navbar-inner")
@@ -103,6 +103,7 @@ body
           //      a(href="#") 404
 
   block content
+    div(ng-controller="backlogCtrl")
   //div(style="position: absolute; left:50%; top:50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%);")
   //  div(class="button-wrapper")
   //    a(href="#" class="a-btn")
@@ -162,8 +163,10 @@ body
   script(src="/js/template/excanvas.min.js") 
   script(src="/js/template/bootstrap.js")
   script(src="/js/template/base.js") 
-  script(ser="/js/datetimepicker/moments.js")
-  script(ser="/js/datetimepicker/bootstrap-datetimepicker.min.js")
+  script(src="/js/datetimepicker/moments.js")
+  script(src="/js/datetimepicker/bootstrap-datetimepicker.min.js")
+  script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js")
+  script(src="/js/bybProyect.js")
   
   //script.
   //  $(document).ready(function() {

@@ -156,6 +156,10 @@ app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
 
 });
 
+app.get("/api/simple-cards",user.can("anonymousUser"),function(req,res){
+  
+})
+
 app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
    var data = [];
     Proyecto
@@ -194,6 +198,23 @@ app.get("/editProfile",user.can("anonymousUser"),function(req,res){
 
 });
 
+app.get("/api/backlog/:idProy",function(req, res) {
+  console.log(req.params.idProy)
+  var data = [];
+      Backlog
+    .find()
+    .populate('proyectos')
+    .exec(function (err, backlog) {
+    if (err) console.log(String(err));
+      console.log("Buscando backlog");
+      console.log(backlog);
+      for(var val in backlog) {
+         data.push(backlog[val])
+      }
+      res.json(data);
+});
+})
+
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
   console.log("Entro al backlog")
 var data = [];
@@ -203,17 +224,14 @@ var data = [];
     .exec(function (err, backlog) {
     if (err) console.log(String(err));
       console.log("Buscando backlog");
-      console.log(backlog);
+      //console.log(backlog);
       for(var val in backlog) {
          data.push(backlog[val])
-
       }
     res.render("backlog",{
       backlog:data,
       idProy:req.params.idProy
     });
-
-
 });
 });
 
