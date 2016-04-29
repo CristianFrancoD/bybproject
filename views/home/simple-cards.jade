@@ -54,11 +54,11 @@ block content
                                     form(method="post" action="/delProject/#{proyect._id}")  
                                       input(type="submit" class="btn btn-danger" value="Eliminar proyecto" name="delDP")
                                     form(method="get" action="/backlog/#{proyect._id}")  
-                                      input(ng-click="getUserHistory('#{proyect._id}')" type="submit" class="btn btn-danger"  value="Ir al backlog" name="backlog")
+                                      input(ng-click="getUserHistory('#{proyect._id}')" type="submit" class="btn btn-danger"  value="Ir al backlog")
                                 else
                                   div
                                     form(method="get" action="/backlog/#{proyect._id}")  
-                                      input( ng-click="getUserHistory(#{proyect._id})" type="submit" class="btn btn-danger"  value="Ir al backlog" name="delDP")
+                                      input( ng-click="getUserHistory('#{proyect._id}')" type="submit" class="btn btn-danger"  value="Ir al backlog")
 block footer
 block script
             

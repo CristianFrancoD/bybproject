@@ -19,7 +19,7 @@ contrasena:{type:String, minlength:[6,"El password es muy corto"]/*,validate:{
       }, message: "Las contraseñas no son iguales"
       }*/
     },
-proyectos:[ {type : mongoose.Schema.ObjectId, ref : 'Proyecto'}]
+proyectos:{type : mongoose.Schema.ObjectId, ref : 'Proyecto'}
 });
 
 rolSchema.add({

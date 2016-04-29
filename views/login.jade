@@ -1,5 +1,5 @@
 doctype html
-html(lang="es")
+html(ng-app="bybApp")
   head
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
@@ -15,12 +15,15 @@ html(lang="es")
     
     script(src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-route.js")
+    script(src="/js/bybProyect.js")
     
     script(src="/js/switchery/switchery.min.js")
 
     title B&B Projects
     
-  body
+  body(ng-controller="mainCtrl")
     div(class="modal fade" tabindex="-1" role="dialog" id="loginModal")
       div(class="modal-dialog modal-md")
         div(class="modal-content")
@@ -41,14 +44,14 @@ html(lang="es")
                       div(class="input-group")
                         span(class="input-group-addon")
                           i(class="glyphicon glyphicon-envelope")
-                        input(type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico")
+                        input(type="email" class="form-control" ng-model="user.email" name="email" id="email" placeholder="Correo electrónico")
 
                   div(class="form-group")
                     div(class="col-md-12")
                       div(class="input-group")
                         span(class="input-group-addon")
                           i(class="glyphicon glyphicon-lock")
-                        input(type="password" class="form-control" name="contra" id="contrasena" placeholder="Contraseña")
+                        input(type="password" class="form-control" ng-model="user.contra" name="contra" id="contrasena" placeholder="Contraseña")
 
                   div(class="form-group")
                     div(class="col-md-12")
