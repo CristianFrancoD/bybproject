@@ -7,7 +7,7 @@ var passport = require("passport"),
 var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server)
-
+var historias = [];
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
 var Backlog = require("./models/usuarios").Backlog;
@@ -37,12 +37,14 @@ app.use(passport.initialize());
 app.use(flash());
 
 
+
+
 io.on('connect',function(socket){
   console.log("Se conecto");
-  socket.emit("enviarMensajes",mensajes);
+  socket.emit("enviarMensajes",historias);
   socket.on("mensajeNuevo",function(data){
-    mensajes.push(data);
-    io.sockets.emit("enviarMensajes",mensajes)
+    historias.push(data);
+    io.sockets.emit("enviarMensajes",historias)
   })
 })
 
@@ -224,6 +226,7 @@ app.get("/api/backlog/:idProy",function(req, res) {
       for(var val in backlog) { 
          data.push(backlog[val])
       }
+      historias = backlog;
       res.json(data);
 });
 })

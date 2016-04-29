@@ -3,7 +3,7 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
   
     $scope.historias = [];
     $scope.userHistory = {};
-    //$scope.socket = io.connect("https://bybproyecttest-carlossn.c9users.io:8080/",{'forceNew':true});
+    $scope.socket = io.connect("https://bybproyecttest-carlossn.c9users.io:8080",{'forceNew':true});
     
     $scope.getUserHistory = function(id){
         $scope.idProy = id;
@@ -35,10 +35,18 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
         console.log($scope.userHistory);
         $http.post("https://bybproyecttest-carlossn.c9users.io/api/backlog/"+id,$scope.userHistory).success(function(data){
             console.log(data);
-            $scope.historias.push($scope.userHistory);
+            $scope.socket.emit("mensajeNuevo",$scope.userHistory);
+            
         }).error(function(err){
             console.log(String(err));
         })
         //TODO socket.io
+       
+        
     }
+     $scope.socket.on("enviarMensajes",function(data){
+            $scope.historias = data;
+            console.log($scope.historias);
+            $scope.$apply();
+     })
 })
