@@ -5,6 +5,9 @@ var flash = require('connect-flash');
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy;
 var app = express();
+var server = require("http").Server(app);
+var io = require("socket.io")(server)
+
 var bodyParser = require("body-parser");
 var Usuario = require("./models/usuarios").Usuario;
 var Backlog = require("./models/usuarios").Backlog;
@@ -32,6 +35,16 @@ saveUninittialized:false
 app.use(user.middleware());
 app.use(passport.initialize());
 app.use(flash());
+
+
+io.on('connect',function(socket){
+  console.log("Se conecto");
+  socket.emit("enviarMensajes",mensajes);
+  socket.on("mensajeNuevo",function(data){
+    mensajes.push(data);
+    io.sockets.emit("enviarMensajes",mensajes)
+  })
+})
 
 passport.use(new LocalStrategy({
   usernameField : 'email',
@@ -208,7 +221,7 @@ app.get("/api/backlog/:idProy",function(req, res) {
     if (err) console.log(String(err));
       console.log("Buscando backlog");
       console.log(backlog);
-      for(var val in backlog) {
+      for(var val in backlog) { 
          data.push(backlog[val])
       }
       res.json(data);
@@ -217,6 +230,7 @@ app.get("/api/backlog/:idProy",function(req, res) {
 
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
   console.log("Entro al backlog")
+  
 var data = [];
   Backlog
     .find()
@@ -229,7 +243,6 @@ var data = [];
          data.push(backlog[val])
       }
     res.render("backlog",{
-      backlog:data,
       idProy:req.params.idProy
     });
 });
@@ -241,18 +254,14 @@ app.get("/backlog",user.can("anonymousUser"),function(req,res){
 
 });
 
-app.get("/addBacklog/:idProy",user.can("anonymousUser"),function(req,res){
+
+
+app.post("/api/backlog/:idProy",function(req,res){
   console.log(req.params.idProy);
-    res.render("addBacklog",{
-      idProy:req.params.idProy
-    });
-
-});
-
-app.post("/addbacklog/:idProy",function(req,res){
-
-
-var backlog = new Backlog({
+  res.render("backlog",{
+    idProy:req.params.idProy
+  });
+  var backlog = new Backlog({
 
 tiempoEstimado: req.body.tiempo,
 prioridad: req.body.prioridad,
@@ -262,7 +271,7 @@ descripcion: req.body.descripcion,
 proyectos: req.params.idProy
 });
 backlog.save().then(function(us){
-res.redirect("/backlog/")
+res.json(us)
 console.log("Se guardo el backlog");
 
 },function(err){
@@ -271,13 +280,6 @@ console.log("Se guardo el backlog");
   console.log("Hubo un error al guarda el backlog")
 
 });
-});
-
-app.post("/backlog/:idProy",function(req,res){
-  console.log(req.params.idProy);
-  res.render("backlog",{
-    idProy:req.params.idProy
-  });
 
 });
 
@@ -340,9 +342,10 @@ app.post("/sessions",
       session:false
 }),function(req ,res){
     req.session.user = req.user._id;
+    
     //req.session.rol = req.user.rol;
-    res.redirect("/dashboard");
     console.log(req.user.nombreCompleto);
+    res.redirect("/dashboard");
   });
 
 app.post("/dashboard",function(req,res){
@@ -450,4 +453,4 @@ app.post("/profile", function(req, res){
    });
 });
 
-app.listen(8080);
+server.listen(8080);

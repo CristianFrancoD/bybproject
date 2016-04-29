@@ -8,15 +8,37 @@ block subnavbar-header
 
 block content
     h1 Historias
+    form(ng-submit="saveUserHistory('#{idProy}')")
+        h3 Registro de backlog
+        div(class="form-group")
+            input(type="text" class="form-control" ng-model="userHistory.descripcion" name="desc" id="desc" placeholder="Descripcion")
+
+        div(class="form-group")
+            input(type="text" class="form-control" ng-model="userHistory.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")
+
+        div(class="form-group")
+            input(type="text" class="form-control" ng-model="userHistory.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+
+        div(class="form-group")
+            input(type="text" class="form-control" ng-model="userHistory.estado" name="estado" id="estado" placeholder="Estado")
+
+        div(class="form-group")
+            input(type="text" class="form-control" ng-model="userHistory.creador" name="creador" id="creador" placeholder="Creador tarjeta")
+                
+        div
+            input(type="submit" value="Aceptar" class="btn btn-info")
+                
+                
         div(ng-show="!userHistorys.length") No hay historias de usuario
-        div(class="row" ng-repeat="item in userHistorys")
-            div(class="well col-lg-4" style="border:'thin'")
+        div(class="row" )
+            div(class="well col-lg-4" style="border:'thin'" ng-repeat="item in historias")
                 h3 Historia de usuario
                 p {{item.estado}}
                 label(class="label label-info") {{item.prioridad}}
                 label(class="label label-info") {{item.tiempoEstimado}}
-                form(method="get" action="/addBacklog/#{idProy}")  
-                  input(type="submit" class="btn btn-danger" value="Crear backlog" name="addBack")
+                
+                
+                
             
         div(ng-bind="mensaje"){{mensaje}}
 block footer
