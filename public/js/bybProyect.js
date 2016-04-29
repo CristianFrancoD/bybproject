@@ -16,17 +16,7 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
         }).error(function(err){
             console.log(String(err))
         })  
-    }();
-        $scope.login_click = function(){
-        console.log("ejecutandose")
-        $http.post("https://bybproyecttest-carlossn.c9users.io/sessions/").success(function(data){
-            console.log(data);
-            $scope.proyects = data;
-            console.log($scope.proyects);
-        }).error(function(err){
-            console.log(String(err))
-        })
-    }
+    };
     
     $scope.saveUserHistory = function(id){
         console.log("posteando...");
