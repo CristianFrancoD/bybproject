@@ -217,7 +217,7 @@ app.get("/api/backlog/:idProy",function(req, res) {
   console.log(req.params.idProy)
   var data = [];
       Backlog
-    .find()
+    .find({proyectos:req.params.idProy})
     .populate('proyectos')
     .exec(function (err, backlog) {
     if (err) console.log(String(err));
