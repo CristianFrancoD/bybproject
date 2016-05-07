@@ -20,15 +20,15 @@ block content
                 div(style="padding: 15px;")
                   form(ng-submit="saveUserHistory('#{idProy}')")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.descripcion" name="desc" id="desc" placeholder="Descripcion")
+                      input(type="text" class="form-control span4" ng-model="userHistory.descripcion" name="descripcion" id="descripcion" placeholder="Descripcion")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")
+                      input(type="text" class="form-control span4" ng-model="userHistory.tiempoEstimado" name="tiempoEstimado" id="tiempoEstimado" placeholder="Tiempo estimado")
                     div(class="form-group")
                       input(type="text" class="form-control span4" ng-model="userHistory.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
                     div(class="form-group")
                       input(type="text" class="form-control span4" ng-model="userHistory.estado" name="estado" id="estado" placeholder="Estado")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.creador" name="creador" id="creador" placeholder="Creador tarjeta")
+                      input(type="text" class="form-control span4" ng-model="userHistory.creadorTarjeta" name="creadorTarjeta" id="creadorTarjeta" placeholder="Creador tarjeta")
                     div
                       input(type="submit" value="Aceptar" class="btn btn-info")
                     div(class="alert" style="margin-top: 10px;" ng-show="!userHistorys.length")
@@ -42,19 +42,19 @@ block content
                         table(class="table table-striped table-bordered")
                           thead
                             tr
-                              th Creador tarjeta
-                              th Estado
-                              th Prioridad
                               th Descripción
                               th Tiempo estimado
+                              th Prioridad                  
                               th Acciones
+                              th Estado
+                              th Creador tarjeta
                           tbody
                             tr(ng-repeat="item in historias")
-                              td {{item.creadorTarjeta}}
-                              td {{item.estado}}
-                              td {{item.prioridad}}
                               td {{item.descripcion}}
-                              td {{item.tiempoEstimado}}
+                              td {{item.tiempoEstimado}}  
+                              td {{item.prioridad}}
+                              td {{item.estado}}
+                              td {{item.creadorTarjeta}}
                               td
                                 a(href="#editarHistoria" role="button" class="btn" data-toggle="modal") 
                                   i(class="btn-icon-only icon-edit")

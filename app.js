@@ -172,7 +172,7 @@ app.get("/productBacklog",user.can("anonymousUser"),function(req,res){
 });
 
 app.get("/api/simple-cards",user.can("anonymousUser"),function(req,res){
-  
+
 })
 
 app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
@@ -223,7 +223,7 @@ app.get("/api/backlog/:idProy",function(req, res) {
     if (err) console.log(String(err));
       console.log("Buscando backlog");
       console.log(backlog);
-      for(var val in backlog) { 
+      for(var val in backlog) {
          data.push(backlog[val])
       }
       historias = backlog;
@@ -233,7 +233,7 @@ app.get("/api/backlog/:idProy",function(req, res) {
 
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
   console.log("Entro al backlog")
-  
+
 var data = [];
   Backlog
     .find()
@@ -266,16 +266,17 @@ app.post("/api/backlog/:idProy",function(req,res){
   });
   var backlog = new Backlog({
 
-tiempoEstimado: req.body.tiempo,
+tiempoEstimado: req.body.tiempoEstimado,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
-creadorTarjeta: req.body.creador,
+creadorTarjeta: req.body.creadorTarjeta,
 descripcion: req.body.descripcion,
 proyectos: req.params.idProy
 });
 backlog.save().then(function(us){
 res.json(us)
 console.log("Se guardo el backlog");
+console.log(us)
 
 },function(err){
 
@@ -338,14 +339,14 @@ app.post("/agregarPO/:idUsuario/:idProy", function(req,res){
 });
 
 
-app.post("/sessions", 
+app.post("/sessions",
   passport.authenticate('local',{
       failureRedirect: '/login',
       failureFlash: true,
       session:false
 }),function(req ,res){
     req.session.user = req.user._id;
-    
+
     //req.session.rol = req.user.rol;
     console.log(req.user.nombreCompleto);
     res.redirect("/dashboard");
@@ -377,6 +378,10 @@ app.post("/dashboard",function(req,res){
     console.log("Hubo un error");
   })
 })
+
+
+
+
 
 // Agregar PO.
 // Agregar Developers.
