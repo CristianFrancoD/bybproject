@@ -7,12 +7,12 @@ head
   meta(http-equiv="X-UA-Compatible" content="IE=edge")
   meta(name="viewport" content="width=device-width, initial-scale=1")
   meta(name="apple-mobile-web-app-capable" content="yes")
-  base(href="/") 
+  base(href="/")
 
   // Bloque de links.
   block link
   link(href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet")
-  link(href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet")  
+  link(href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet")
   link(href="/styles/template/bootstrap.min.css" rel="stylesheet")
   link(href="/styles/template/bootstrap-responsive.min.css" rel="stylesheet")
   link(href="/styles/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet")
@@ -21,8 +21,9 @@ head
   link(href="/styles/pages/dashboard.css" rel="stylesheet")
   link(href="/styles/cards/rotating-card.css" rel="stylesheet")
   link(rel="stylesheet" type="text/css" href="/styles/style5.css")
+  link(rel="stylesheet" type="text/css" href="/styles/jquery-dropdown.css")
   link(href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css')
-  
+
   // Bloque de título.
   block title
   title #{titulo} | B&B Projects
@@ -37,25 +38,25 @@ body(ng-controller="backlogCtrl")
             span(class="icon-bar")
               span(class="icon-bar")
         a(class="brand" href="/dahsboard") B&B Projects
-    
+
         div(class="nav-collapse")
           ul(class="nav pull-right")
             li(class="dropdown")
               a(href="#" class="dropdown-toggle" data-toggle="dropdown")
                 i.icon-user
-                span(style="padding-left:5px;") usuario@mail.com 
+                span(style="padding-left:5px;") usuario@mail.com
                 b(class="caret")
               ul(class="dropdown-menu")
                 li
-                  a(href="#") 
+                  a(href="#")
                     |  Ver Perfil
-                li 
+                li
                   a(href="#")
                     | Configurar cuenta
                 li
-                  a(href="/") 
+                  a(href="/")
                     | Cerrar sesión
-              
+
           form(class="navbar-search pull-right")
             input(type="text" class="search-query" placeholder="Buscar proyecto")
 
@@ -90,7 +91,7 @@ body(ng-controller="backlogCtrl")
           //    span Drops
           //    b(class="caret")
           //  ul(class="dropdown-menu")
-          //    li 
+          //    li
           //      a(href="#") Icons
           //    li
           //      a(href="#") FAQ
@@ -112,7 +113,7 @@ body(ng-controller="backlogCtrl")
   //      span(class="a-btn-text") Sin proyectos
   //      span(class="a-btn-slide-text") Crea tu primer proyecto
   //      span(class="a-btn-slide-icon")
-  
+
   block footer
   div(class="footer")
     div(class="footer-inner")
@@ -120,7 +121,7 @@ body(ng-controller="backlogCtrl")
         div(class="row")
           div(class="span12" class="text-center") &copy; 2016
             a(href="http://www.egrappler.com/" class="text-center")  B&B Projects
-  
+
   block newProjectModal
   div(class="modal hide fade" tabindex="-1" role="dialog" id="newProjectModal" aria-labelledby="myModalLabel" aria-hidden="true")
     div(class="modal-header")
@@ -132,45 +133,46 @@ body(ng-controller="backlogCtrl")
           h3 Datos del Proyecto
           form(class="form-horizontal" style="padding-top: 20px;" method='POST',action='dashboard')
             fieldset
-              div(class="control-group")											
+              div(class="control-group")
                 label(class="control-label" for="nombreProyecto") Nombre del proyecto:
                 div(class="controls")
                   input(type="text" class="span4" id="nombreProyecto" name="nombreProyecto")
-              div(class="control-group date"  id="fechaSolicitudCalendario")										
+              div(class="control-group date"  id="fechaSolicitudCalendario")
                 label(class="control-label" for="fechaSolicitud") Fecha de solicitud:
                 div(class="controls")
                   div(class="input-prepend input-append")
                     input(class="span2" type="text" name="fechaSolicitud")
                     span(class="add-on")
                       i(class="icon-calendar")
-              div(class="control-group date" id="fechaInicioCalendario")										
+              div(class="control-group date" id="fechaInicioCalendario")
                 label(class="control-label" for="fechaInicio") Fecha de inicio:
                 div(class="controls")
                   div(class="input-prepend input-append")
                     input(class="span2" id="fechaInicio" type="text" name="fechaArranque")
                     span(class="add-on")
                       i(class="icon-calendar")
-              div(class="control-group")											
+              div(class="control-group")
                 label(class="control-label" for="Descripcion") Descripción:
                 div(class="controls")
                   textarea(class="span4" rows="5" name="descripcion")
-    
+
               input(class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
               a(href="/simple-cards")
               input(class="btn btn-primary" type="submit" value="Crear Proyecto")
-    
+
   block script
-  script(src="/js/template/jquery-1.7.2.min.js") 
-  script(src="/js/template/excanvas.min.js") 
+  script(src="/js/template/jquery-1.7.2.min.js")
+  script(src="/js/template/excanvas.min.js")
   script(src="/js/template/bootstrap.js")
-  script(src="/js/template/base.js") 
+  script(src="/js/template/base.js")
   script(src="/js/datetimepicker/moments.js")
   script(src="/js/datetimepicker/bootstrap-datetimepicker.min.js")
-  script(src="https://bybproyecttest-carlossn.c9users.io/socket.io/socket.io.js")
+  script(src="/js/jquery-dropdown.js")
+  script(src="http://localhost:8080/socket.io/socket.io.js")
   script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js")
   script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js")
   script(src="/js/bybProyect.js")
-  
+
   //script.
   //  $(document).ready(function() {
   //    $('#fechaSolicitudCalendario').datepicker({

@@ -56,18 +56,34 @@ block content
                               td {{item.descripcion}}
                               td {{item.tiempoEstimado}}
                               td
-                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal") 
+                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal")
                                   i(class="btn-icon-only icon-edit")
-                                  
+
   div(id="editarHistoria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     div(class="modal-header")
       button(type="button" class="close" data-dismiss="modal" aria-hidden="true") ×
       h3 Editar historia de usuario
     div(class="modal-body")
-      p TO DO
+      form(ng-submit="saveUserHistory('#{idProy}')")
+        div(class="form-group")
+          label Descripción:
+          input(type="text" class="form-control span4" ng-model="userHistory.descripcion" name="desc" id="desc" placeholder="Descripcion")
+        div(class="form-group")
+          label Tiempo estimado:
+          input(type="text" class="form-control span4" ng-model="userHistory.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")
+        div(class="form-group")
+          label Prioridad:
+          input(type="text" class="form-control span4" ng-model="userHistory.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+        div(class="form-group")
+          label Estado:
+          input(type="text" class="form-control span4" ng-model="userHistory.estado" name="estado" id="estado" placeholder="Estado")
+        div(class="form-group")
+          label Creador de tarjeta:
+          input(type="text" class="form-control span4" ng-model="userHistory.creador" name="creador" id="creador" placeholder="Creador tarjeta")
+
     div(class="modal-footer")
       button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
       button(class="btn btn-primary") Guardar
-  
+
 block footer
 block script
