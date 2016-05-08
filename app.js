@@ -261,9 +261,9 @@ app.get("/backlog",user.can("anonymousUser"),function(req,res){
 
 app.post("/api/backlog/:idProy",function(req,res){
   console.log(req.params.idProy);
-  res.render("backlog",{
+  /*res.render("backlog",{
     idProy:req.params.idProy
-  });
+  });*/
   var backlog = new Backlog({
 
 tiempoEstimado: req.body.tiempoEstimado,

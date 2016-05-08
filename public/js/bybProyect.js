@@ -17,6 +17,14 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
             console.log(String(err))
         })
     };
+$scope.editbacklog = function(id){
+
+$scope.historyToEdit = $scope.historias[id]
+console.log($scope.historyToEdit);
+
+}
+
+
 
     $scope.saveUserHistory = function(id){
         console.log("posteando...");
@@ -25,7 +33,7 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
         console.log($scope.userHistory);
         $http.post("/api/backlog/"+id,$scope.userHistory).success(function(data){
             console.log(data);
-            $scope.socket.emit("mensajeNuevo",$scope.userHistory);
+            $scope.socket.emit("mensajeNuevo",data);
 
         }).error(function(err){
             console.log(String(err));

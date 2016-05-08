@@ -56,7 +56,7 @@ block content
                               td {{item.estado}}
                               td {{item.creadorTarjeta}}
                               td
-                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal")
+                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="editbacklog($index)")
                                   i(class="btn-icon-only icon-edit")
 
   div(id="editarHistoria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
