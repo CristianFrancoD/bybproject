@@ -46,6 +46,14 @@ io.on('connect',function(socket){
     historias.push(data);
     io.sockets.emit("enviarMensajes",historias)
   })
+  socket.on("editBacklog",function(data){
+    for(var item in historias){
+      if(historias[item]._id==data._id){
+        historias.splice(item,1,data)
+      }
+    }
+    io.sockets.emit("enviarMensajes",historias)
+  })
 })
 
 passport.use(new LocalStrategy({
@@ -257,19 +265,20 @@ app.get("/backlog",user.can("anonymousUser"),function(req,res){
 
 });
 
-app.post("/api/backlog/editbacklog",function(req, res){
-
+app.post("/api/editbacklog",function(req, res){
+console.log("El id de la tarjeta a editar es: ",req.body._id);
 var nuevosDatos = {
-tiempoEstimado: req.body.tiempo,
+tiempoEstimado: req.body.tiempoEstimado,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
-creadorTarjeta: req.body.creador,
-descripcion: req.body.desc,
+creadorTarjeta: req.body.creadorTarjeta,
+descripcion: req.body.descripcion,
 }
-
-Backlog.findOneAndUpdate({id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
-    if (err) return res.send(500, { error: err });
-    return res.json(doc);
+console.log(nuevosDatos);
+Backlog.findOneAndUpdate({_id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
+    if (err)console.log(String(err));
+    console.log(doc)
+    res.json(doc);
 });
 });
 

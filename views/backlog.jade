@@ -56,7 +56,7 @@ block content
                               td {{item.estado}}
                               td {{item.creadorTarjeta}}
                               td
-                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="editbacklog($index)")
+                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
                                   i(class="btn-icon-only icon-edit")
 
   div(id="editarHistoria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
@@ -64,26 +64,26 @@ block content
       button(type="button" class="close" data-dismiss="modal" aria-hidden="true") ×
       h3 Editar historia de usuario
     div(class="modal-body")
-      form(ng-submit="saveUserHistory('#{idProy}')")
+      form()
         div(class="form-group")
           label Descripción:
-          input(type="text" class="form-control span4" ng-model="userHistory.descripcion" name="desc" id="desc" placeholder="Descripcion")
+          input(type="text" class="form-control span4" ng-model="historyToEdit.descripcion" name="desc" id="desc" placeholder="Descripcion")
         div(class="form-group")
           label Tiempo estimado:
-          input(type="text" class="form-control span4" ng-model="userHistory.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")
+          input(type="text" class="form-control span4" ng-model="historyToEdit.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")
         div(class="form-group")
           label Prioridad:
-          input(type="text" class="form-control span4" ng-model="userHistory.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+          input(type="text" class="form-control span4" ng-model="historyToEdit.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
         div(class="form-group")
           label Estado:
-          input(type="text" class="form-control span4" ng-model="userHistory.estado" name="estado" id="estado" placeholder="Estado")
+          input(type="text" class="form-control span4" ng-model="historyToEdit.estado" name="estado" id="estado" placeholder="Estado")
         div(class="form-group")
           label Creador de tarjeta:
-          input(type="text" class="form-control span4" ng-model="userHistory.creador" name="creador" id="creador" placeholder="Creador tarjeta")
+          input(type="text" class="form-control span4" ng-model="historyToEdit.creadorTarjeta" name="creador" id="creador" placeholder="Creador tarjeta")
 
-    div(class="modal-footer")
-      button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
-      button(class="btn btn-primary") Guardar
+        div(class="modal-footer")
+          button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
+          button(class="btn btn-primary" ng-click="editbacklog()" data-dismiss="modal" aria-hidden="true") Guardar
 
 block footer
 block script

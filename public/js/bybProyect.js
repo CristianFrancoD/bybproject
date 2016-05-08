@@ -17,13 +17,22 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
             console.log(String(err))
         })
     };
-$scope.editbacklog = function(id){
-
+$scope.showEditbacklog = function(id){
+console.log(id);
 $scope.historyToEdit = $scope.historias[id]
 console.log($scope.historyToEdit);
 
 }
-
+$scope.editbacklog = function(){
+    $http.post("/api/editbacklog",$scope.historyToEdit).success(function(data){
+        console.log(data)
+        $scope.socket.emit("editBacklog",$scope.historyToEdit);
+    }).error(function(err){
+        console.log(String(err))
+    })
+        
+    
+}
 
 
     $scope.saveUserHistory = function(id){
