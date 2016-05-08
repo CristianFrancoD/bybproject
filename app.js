@@ -46,14 +46,6 @@ io.on('connect',function(socket){
     historias.push(data);
     io.sockets.emit("enviarMensajes",historias)
   })
-  socket.on("editBacklog",function(data){
-    for(var item in historias){
-      if(historias[item]._id==data._id){
-        historias.splice(item,1,data)
-      }
-    }
-    io.sockets.emit("enviarMensajes",historias)
-  })
 })
 
 passport.use(new LocalStrategy({
@@ -223,6 +215,9 @@ app.get("/editProfile",user.can("anonymousUser"),function(req,res){
 
 app.get("/api/backlog/:idProy",function(req, res) {
   console.log(req.params.idProy)
+
+
+
   var data = [];
       Backlog
     .find({proyectos:req.params.idProy})
@@ -240,7 +235,23 @@ app.get("/api/backlog/:idProy",function(req, res) {
 })
 
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
+  var hayProductOwner;
   console.log("Entro al backlog")
+    Proyecto.count({$and:[{_id:req.params.idProy},{productOwner:req.session.user}]},function(error,count){
+      if (count == 0) {
+        hayProductOwner = false
+      }
+      else {
+
+        hayProductOwner = true;
+      }
+      console.log(count);
+
+
+
+    })
+
+
 
 var data = [];
   Backlog
@@ -254,7 +265,8 @@ var data = [];
          data.push(backlog[val])
       }
     res.render("backlog",{
-      idProy:req.params.idProy
+      idProy:req.params.idProy,
+      hayProductOwner:hayProductOwner
     });
 });
 });
@@ -265,20 +277,20 @@ app.get("/backlog",user.can("anonymousUser"),function(req,res){
 
 });
 
-app.post("/api/editbacklog",function(req, res){
-console.log("El id de la tarjeta a editar es: ",req.body._id);
+app.post("/api/backlog/editbacklog",function(req, res){
+
 var nuevosDatos = {
-tiempoEstimado: req.body.tiempoEstimado,
+tiempoEstimado: req.body.tiempo,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
-creadorTarjeta: req.body.creadorTarjeta,
-descripcion: req.body.descripcion,
+creadorTarjeta: req.body.creador,
+descripcion: req.body.desc,
 }
-console.log(nuevosDatos);
-Backlog.findOneAndUpdate({_id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
-    if (err)console.log(String(err));
-    console.log(doc)
-    res.json(doc);
+
+Backlog.findOneAndUpdate({id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.json(doc);
+
 });
 });
 

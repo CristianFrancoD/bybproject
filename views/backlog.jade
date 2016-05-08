@@ -56,9 +56,14 @@ block content
                               td {{item.estado}}
                               td {{item.creadorTarjeta}}
                               td
+                                if hayProductOwner 
+                                  a(href="#aceptarHistoria" role="button" class="btn")
+                                    i(class="btn-icon-only icon-ok-sign")
+                                  a(href="#rechazarHistoria" role="button" class="btn")
+                                    i(class="btn-icon-only icon-remove")  
                                 a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
                                   i(class="btn-icon-only icon-edit")
-
+                              
   div(id="editarHistoria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     div(class="modal-header")
       button(type="button" class="close" data-dismiss="modal" aria-hidden="true") ×
