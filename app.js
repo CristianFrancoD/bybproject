@@ -257,7 +257,21 @@ app.get("/backlog",user.can("anonymousUser"),function(req,res){
 
 });
 
+app.post("/api/backlog/editbacklog",function(req, res){
 
+var nuevosDatos = {
+tiempoEstimado: req.body.tiempo,
+prioridad: req.body.prioridad,
+estado: req.body.estado,
+creadorTarjeta: req.body.creador,
+descripcion: req.body.desc,
+}
+
+Backlog.findOneAndUpdate({id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.json(doc);
+});
+});
 
 app.post("/api/backlog/:idProy",function(req,res){
   console.log(req.params.idProy);
