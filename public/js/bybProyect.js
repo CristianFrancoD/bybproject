@@ -3,7 +3,7 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
 
     $scope.historias = [];
     $scope.userHistory = {};
-    $scope.socket = io.connect("/",{'forceNew':true});
+    $scope.socket = io.connect("localhost:80",{'forceNew':true});
 
     $scope.getUserHistory = function(id){
         $scope.idProy = id;
