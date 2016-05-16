@@ -145,15 +145,14 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
     if(err)console.log(String(err));
     if(count!=0){
       console.log("Numero de proyectos",count);
-       res.redirect("/simple-cards")
+       res.redirect(200,"/simple-cards");
+       console.log(res.statusCode);
     }else{
       console.log("No tiene registrados proyectos");
+      res.render("layout");
     }
-    res.render("layout");
+    
   })
-
-
-
 });
 
 
