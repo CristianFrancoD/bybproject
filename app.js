@@ -153,7 +153,6 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
       console.log("No tiene registrados proyectos");
       res.render("layout");
     }
-    
   })
 });
 
