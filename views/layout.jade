@@ -156,17 +156,15 @@ body(ng-controller="backlogCtrl")
                 div(class="controls")
                   textarea(class="span4" rows="5" name="descripcion")
 
-            
-            input(class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
-            input(class="btn btn-primary" type="submit" value="Crear Proyecto")
-  block script
+              input(class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
+              a(href="/simple-cards")
+              input(class="btn btn-primary" type="submit" value="Crear Proyecto")
   script(src="/js/template/jquery-1.7.2.min.js")
   script(src="/js/template/excanvas.min.js")
   script(src="/js/template/bootstrap.js")
   script(src="/js/template/base.js")
   script(src="/js/datetimepicker/moments.js")
   script(src="/js/datetimepicker/bootstrap-datetimepicker.min.js")
-
   script(src="/js/jquery-dropdown.js")
   script(src="https://proyectobyb-carlossn.c9users.io/socket.io/socket.io.js")
   script(src="/js/angular/angular.min.js")
