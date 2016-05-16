@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/bybDataBase");
+mongoose.connect("mongodb://generico:123@ds023452.mlab.com:23452/bybdatabase");
 var Schema = mongoose.Schema,
 ObjectId = Schema.ObjectId;
 
