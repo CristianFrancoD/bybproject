@@ -140,7 +140,7 @@ app.get("/signup",function(req, res) {
 
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
-
+  console.log("Entro a dashboard");
   Proyecto.count({$or:[{proyectManager:req.session.user},{equipoInvolucdrado:req.session.user},{productOwner:req.session.user}]},function(err,count){
     if(err)console.log(String(err));
     if(count!=0){
