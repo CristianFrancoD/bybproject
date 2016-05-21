@@ -145,10 +145,17 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
     if(err)console.log(String(err));
     if(count!=0){
       console.log("Numero de proyectos",count);
+<<<<<<< HEAD
 
        res.redirect(301,"/simple-cards");
        console.log(res.statusCode);
 
+=======
+
+       res.redirect(301,"/simple-cards");
+       console.log(res.statusCode);
+
+>>>>>>> 99318f5202e92fa74750e5e4615ef8237669a73e
     }else{
       console.log("No tiene registrados proyectos");
       res.render("layout");
@@ -486,5 +493,5 @@ app.post("/profile", function(req, res){
    });
 });
 
-//server.listen(process.env.PORT || 80);
-server.listen(8080);
+
+server.listen(process.env.PORT || 80);
