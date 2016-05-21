@@ -140,18 +140,20 @@ app.get("/signup",function(req, res) {
 
 
 app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
-
+  console.log("Entro a dashboard");
   Proyecto.count({$or:[{proyectManager:req.session.user},{equipoInvolucdrado:req.session.user},{productOwner:req.session.user}]},function(err,count){
     if(err)console.log(String(err));
     if(count!=0){
       console.log("Numero de proyectos",count);
-       res.redirect("/simple-cards")
+
+       res.redirect(301,"/simple-cards");
+       console.log(res.statusCode);
+
+    }else{
+      console.log("No tiene registrados proyectos");
+      res.render("layout");
     }
-    res.render("layout");
   })
-
-
-
 });
 
 
@@ -272,7 +274,7 @@ tiempoEstimado: req.body.tiempoEstimado,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
 creadorTarjeta: req.body.creadorTarjeta,
-descripcion: req.body.descripcion,
+narrativa: req.body.narrativa,
 }
 console.log(nuevosDatos);
 Backlog.findOneAndUpdate({_id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
@@ -293,7 +295,7 @@ tiempoEstimado: req.body.tiempoEstimado,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
 creadorTarjeta: req.body.creadorTarjeta,
-descripcion: req.body.descripcion,
+narrativa: req.body.narrativa,
 proyectos: req.params.idProy
 });
 backlog.save().then(function(us){
@@ -484,4 +486,5 @@ app.post("/profile", function(req, res){
    });
 });
 
+//server.listen(process.env.PORT || 80);
 server.listen(8080);

@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/bybDataBase");
+mongoose.connect("mongodb://generico:123@ds023452.mlab.com:23452/bybdatabase");
 var Schema = mongoose.Schema,
 ObjectId = Schema.ObjectId;
 
@@ -46,7 +46,7 @@ backlogSchema.add({
   prioridad: String,
   estado: String,
   creadorTarjeta: String,
-  descripcion: String,
+  narrativa: String,
   proyectos:[ {type : mongoose.Schema.ObjectId, ref : 'Proyecto'}]
 });
 
