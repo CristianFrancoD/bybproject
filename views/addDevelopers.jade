@@ -1,16 +1,8 @@
-extends ./layout.jade
-
-block link
-    link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
-   
-    
-block title
-  title Agregar Developers 
-    
-    
-block content
-  div(class="container")
+div(id="agregarDevelopers" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  div(class="modal-header")
+    button(type="button" class="close" data-dismiss="modal" aria-hidden="true") ×
     h3 Agregar Developers
+  div(class="modal-body")
     div(class="widget widget-table action-table")
       div(class="widget-header") 
         i(class="icon-th-list")
@@ -29,11 +21,11 @@ block content
                   form(action="/agregarDesarrolador/#{user._id}/#{idProy}", method="POST")
                     input(type="submit" class="btn btn-primary" value="agregar" name="agregarDes")
                     i(class="btn-icon-only icon-ok")
-      br
-      button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
-      input(type="submit" class="btn btn-primary" value="Guardar" name="sabeDev")
+  div(class="modal-footer")
+    button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
+    input(type="submit" class="btn btn-primary" value="Guardar" name="sabeDev")
     
-  //script.
+  script.
     $(window).load(function() {
       $('#agregarDevelopers').modal('show');
     });
