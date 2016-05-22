@@ -238,7 +238,7 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter',
     res.redirect("/dashboard");
   });
 
- app.get('/auth/google', passport.authenticate('google'));
+ app.get('/auth/google', passport.authenticate('google',{scope:['profile','email']}));
 app.get('/auth/twitter/google', passport.authenticate('google',
   {
     failureRedirect: '/login' ,
