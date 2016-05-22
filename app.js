@@ -68,7 +68,7 @@ passport.use(new FacebookStrategy({
   //Local URL
   //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/facebook/callback",
   //DEPLOY URL
-  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/facebook/callback",
+  callbackURL:"https://bybproyectcarlos.herokuapp.com/auth/facebook/callback",
   profileFields:['id','name','email']
 },function(accessToken,refreshToken,profile,done){
 
@@ -100,7 +100,7 @@ passport.use(new TwitterStrategy({
   //Local URL
   //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/twitter/callback",
   //DEPLOY URL
-  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/twitter/callback"
+  callbackURL:"https://bybproyectcarlos.herokuapp.com/auth/twitter/callback"
 
 },function(accessToken,refreshToken,profile,done){
   var email = profile.username+"@gmail.com";
@@ -132,7 +132,7 @@ passport.use(new GoogleStrategy({
         clientID        : "575938905641-o0dbccqtl9sn580ag7invltuu5p71u5s.apps.googleusercontent.com",
         clientSecret    : "HnlV_zKNde9CTGhyTRmo-pgO",
         //Deploy
-        callbackURL     : "https://bybprojectcarlos.herokuapp.com/auth/google/callback"
+        callbackURL     : "https://bybproyectcarlos.herokuapp.com/auth/google/callback"
         //Local
         //callbackURL     : "https://bybproyecttest-carlossn.c9users.io/auth/google/callback",
 
@@ -230,6 +230,16 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook',
 
   app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter',
+  {
+    failureRedirect: '/login' ,
+    session:false
+  }),function(req,res){
+    req.session.user = req.user._id;
+    res.redirect("/dashboard");
+  });
+
+ app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/twitter/google', passport.authenticate('google',
   {
     failureRedirect: '/login' ,
     session:false
