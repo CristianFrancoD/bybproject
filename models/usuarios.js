@@ -42,9 +42,9 @@ proyectosSchema.add({
 
 backlogSchema.add({
   id:Schema.ObjectId,
-  tiempoEstimado:String,
-  prioridad: String,
-  estado: String,
+  como:String,
+  detalmanera: String,
+  quiero: String,
   creadorTarjeta: String,
   narrativa: String,
   proyectos:[ {type : mongoose.Schema.ObjectId, ref : 'Proyecto'}]

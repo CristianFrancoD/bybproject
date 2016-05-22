@@ -29,7 +29,7 @@ app.use(session({
 
 secret: "fc47873566a1da7c3ca94ecccba88241",
 resave: false,
-saveUninittialized:false
+saveUninitialized:false
 }));
 
 app.use(user.middleware());
@@ -270,9 +270,9 @@ app.get("/backlog",user.can("anonymousUser"),function(req,res){
 app.post("/api/editbacklog",function(req, res){
 console.log("El id de la tarjeta a editar es: ",req.body._id);
 var nuevosDatos = {
-tiempoEstimado: req.body.tiempoEstimado,
-prioridad: req.body.prioridad,
-estado: req.body.estado,
+como: req.body.como,
+detalmanera: req.body.detalmanera,
+quiero: req.body.quiero,
 creadorTarjeta: req.body.creadorTarjeta,
 narrativa: req.body.narrativa,
 }
@@ -291,9 +291,9 @@ app.post("/api/backlog/:idProy",function(req,res){
   });*/
   var backlog = new Backlog({
 
-tiempoEstimado: req.body.tiempoEstimado,
-prioridad: req.body.prioridad,
-estado: req.body.estado,
+como: req.body.como,
+detalmanera: req.body.detalmanera,
+quiero: req.body.quiero,
 creadorTarjeta: req.body.creadorTarjeta,
 narrativa: req.body.narrativa,
 proyectos: req.params.idProy
