@@ -239,7 +239,7 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter',
   });
 
  app.get('/auth/google', passport.authenticate('google',{scope:['profile','email']}));
-app.get('/auth/twitter/google', passport.authenticate('google',
+app.get('/auth/google/callback', passport.authenticate('google',
   {
     failureRedirect: '/login' ,
     session:false
