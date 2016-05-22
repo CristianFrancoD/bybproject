@@ -70,7 +70,7 @@ passport.use(new FacebookStrategy({
   callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/facebook/callback",
   profileFields:['id','name','email']
 },function(accessToken,refreshToken,profile,done){
-  
+
   Usuario.findOne({email:profile.emails[0].value},function(err,user) {
     if(err)throw(err);
     if(!err && user!=null) return done(null,user);
@@ -85,7 +85,7 @@ passport.use(new FacebookStrategy({
         throw(err);
       } else{
         console.log("Se guardo usuario de FB");
-        return done(null,user);        
+        return done(null,user);
       }
 
     })
@@ -100,7 +100,7 @@ passport.use(new TwitterStrategy({
   //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/twitter/callback",
   //DEPLOY URL
   callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/twitter/callback"
-  
+
 },function(accessToken,refreshToken,profile,done){
   var email = profile.username+"@gmail.com";
   var fullName = profile.displayName.split(" ");
@@ -120,7 +120,7 @@ passport.use(new TwitterStrategy({
         throw(err);
       } else{
         console.log("Se guardo usuario de Twitter");
-        return done(null,user);        
+        return done(null,user);
       }
     })
   })
@@ -189,7 +189,7 @@ user.use("desarrollador",function(req){
 
 app.get('/auth/facebook', passport.authenticate('facebook',{ scope: [ 'email' ] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook',
-  { 
+  {
     failureRedirect: '/login' ,
      scope: [ 'email' ] ,
      session:false
@@ -201,7 +201,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook',
 
   app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter',
-  { 
+  {
     failureRedirect: '/login' ,
     session:false
   }),function(req,res){
@@ -240,10 +240,10 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
     if(err)console.log(String(err));
     if(count!=0){
       console.log("Numero de proyectos",count);
-       
+
        res.redirect(301,"/simple-cards");
        console.log(res.statusCode);
-       
+
     }else{
       console.log("No tiene registrados proyectos");
       res.render("layout");
@@ -338,6 +338,22 @@ app.get("/api/backlog/:idProy",function(req, res) {
 
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
   console.log("Entro al backlog")
+var hayProductOwner;
+  Proyecto.count({$and:[{_id:req.params.idProy},{productOwner:req.session.user}]},function(error,count){
+     if (count == 0) {
+          hayProductOwner = false
+        }
+        else {
+
+          hayProductOwner = true;
+        }
+        console.log(count);
+
+
+
+      })
+
+
 
 var data = [];
   Backlog
@@ -351,7 +367,8 @@ var data = [];
          data.push(backlog[val])
       }
     res.render("backlog",{
-      idProy:req.params.idProy
+      idProy:req.params.idProy,
+      hayProductOwner:hayProductOwner
     });
 });
 });
@@ -581,4 +598,4 @@ app.post("/profile", function(req, res){
    });
 });
 
-server.listen(process.env.PORT || 80);
+server.listen(process.env.PORT || 8000);
