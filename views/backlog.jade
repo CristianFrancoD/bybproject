@@ -58,6 +58,11 @@ block content
                             p De tal manera: {{item.detalmanera}}
                             p Quiero: {{item.quiero}}
                             p Creador {{item.creadorTarjeta}}
+                              if hayProductOwner 
+                                    a(href="#aceptarHistoria" role="button" class="btn")
+                                      i(class="btn-icon-only icon-ok-sign")
+                                    a(href="#rechazarHistoria" role="button" class="btn")
+                                      i(class="btn-icon-only icon-remove")  
                             a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
                               i(class="btn-icon-only icon-edit")
                     // Termina post-it's.

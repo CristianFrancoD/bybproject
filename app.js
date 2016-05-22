@@ -348,6 +348,22 @@ app.get("/api/backlog/:idProy",function(req, res) {
 
 app.get("/backlog/:idProy",user.can("anonymousUser"),function(req,res){
   console.log("Entro al backlog")
+var hayProductOwner;
+  Proyecto.count({$and:[{_id:req.params.idProy},{productOwner:req.session.user}]},function(error,count){
+     if (count == 0) {
+          hayProductOwner = false
+        }
+        else {
+
+          hayProductOwner = true;
+        }
+        console.log(count);
+
+
+
+      })
+
+
 
 var data = [];
   Backlog
@@ -361,7 +377,8 @@ var data = [];
          data.push(backlog[val])
       }
     res.render("backlog",{
-      idProy:req.params.idProy
+      idProy:req.params.idProy,
+      hayProductOwner:hayProductOwner
     });
 });
 });
