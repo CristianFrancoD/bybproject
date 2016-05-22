@@ -13,7 +13,10 @@ var Usuario = require("./models/usuarios").Usuario;
 var Backlog = require("./models/usuarios").Backlog;
 var Proyecto = require("./models/usuarios").Proyecto;
 var session = require("express-session");
+var FacebookStrategy = require("passport-facebook").Strategy;
+
 app.set("view engine","jade");
+
 var user = new ConnectRoles({
   failureHandler: function (req,res,action){
     res.status(403);
@@ -56,6 +59,47 @@ io.on('connect',function(socket){
   })
 })
 
+module.exports = function(passport){
+  passport.serializeUser(function(user,done){
+    done(null,user);
+  });
+  
+  passport.deserializeUser(function(obj,done){
+    done(null,obj);
+  })
+}
+
+passport.use(new FacebookStrategy({
+  clientID:1693257597605353,
+  clientSecret:"26006323ce0decde6b947789d2dc3910",
+  //Local URL
+  //callbackURL:"https://proyectobyb-carlossn.c9users.io/auth/facebook/callback",
+  //DEPLOY URL
+  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/facebook/callback",
+  profileFields:['id','name','email']
+},function(accessToken,refreshToken,profile,done){
+  
+  Usuario.findOne({email:profile.emails[0].value},function(err,user) {
+    if(err)throw(err);
+    if(!err && user!=null) return done(null,user);
+    console.log("Verificando credenciales");
+    var newUser = new Usuario({
+      nombre:profile._json.first_name,
+      apellidoP:profile._json.last_name,
+      email:profile.emails[0].value
+    })
+    newUser.save(function(err){
+      if(err){
+        throw(err);
+      } else{
+        console.log("Se guardo usuario de FB");
+        return done(null,user);        
+      }
+
+    })
+  })
+}
+))
 passport.use(new LocalStrategy({
   usernameField : 'email',
   passwordField : 'contra'
@@ -114,6 +158,18 @@ user.use("desarrollador",function(req){
 
 })
 
+app.get('/auth/facebook', passport.authenticate('facebook',{ scope: [ 'email' ] }));
+app.get('/auth/facebook/callback', passport.authenticate('facebook',
+  { 
+    failureRedirect: '/login' ,
+     scope: [ 'email' ] ,
+     session:false
+  }),function(req,res){
+    console.log(req.user);
+    req.session.user = req.user._id;
+    res.redirect("/dashboard");
+  });
+
 app.get("/",function(req, res){
   res.render("landing");
 
@@ -145,10 +201,10 @@ app.get("/dashboard",user.can("anonymousUser"), function(req, res) {
     if(err)console.log(String(err));
     if(count!=0){
       console.log("Numero de proyectos",count);
-
+       
        res.redirect(301,"/simple-cards");
        console.log(res.statusCode);
-
+       
     }else{
       console.log("No tiene registrados proyectos");
       res.render("layout");
@@ -486,4 +542,4 @@ app.post("/profile", function(req, res){
    });
 });
 
-server.listen(process.env.PORT || 8000);
+server.listen(process.env.PORT || 80);
