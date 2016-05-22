@@ -20,7 +20,7 @@ block content
                 div(style="padding: 15px;")
                   form(ng-submit="saveUserHistory('#{idProy}')")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.descripcion" name="descripcion" id="descripcion" placeholder="Descripcion")
+                      input(type="text" class="form-control span4" ng-model="userHistory.narrativa" name="narrativa" id="narrativa" placeholder="Narrativa")
                     div(class="form-group")
                       input(type="text" class="form-control span4" ng-model="userHistory.tiempoEstimado" name="tiempoEstimado" id="tiempoEstimado" placeholder="Tiempo estimado")
                     div(class="form-group")
@@ -61,29 +61,29 @@ block content
                             a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
                               i(class="btn-icon-only icon-edit")
                     // Termina post-it's.
-                    div(class="widget widget-table action-table" style="margin-top: 10px;")
-                      div(class="widget-header")
-                        i(class="icon-th-list")
-                      div(class="widget-content")
-                        table(class="table table-striped table-bordered")
-                          thead
-                            tr
-                              th Descripción
-                              th Tiempo estimado
-                              th Prioridad
-                              th Acciones
-                              th Estado
-                              th Creador tarjeta
-                          tbody
-                            tr(ng-repeat="item in historias")
-                              td {{item.descripcion}}
-                              td {{item.tiempoEstimado}}
-                              td {{item.prioridad}}
-                              td {{item.estado}}
-                              td {{item.creadorTarjeta}}
-                              td
-                                a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
-                                  i(class="btn-icon-only icon-edit")
+                    //div(class="widget widget-table action-table" style="margin-top: 10px;")
+                    //  div(class="widget-header")
+                    //    i(class="icon-th-list")
+                    //  div(class="widget-content")
+                    //    table(class="table table-striped table-bordered")
+                    //      thead
+                    //        tr
+                    //          th Narrativa
+                    //          th Tiempo estimado
+                    //          th Prioridad
+                    //          th Acciones
+                    //          th Estado
+                    //          th Creador tarjeta
+                    //      tbody
+                    //        tr(ng-repeat="item in historias")
+                    //          td {{item.narrativa}}
+                    //          td {{item.tiempoEstimado}}
+                    //          td {{item.prioridad}}
+                    //          td {{item.estado}}
+                    //          td {{item.creadorTarjeta}}
+                    //          td
+                    //            a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
+                    //              i(class="btn-icon-only icon-edit")
 
   div(id="editarHistoria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     div(class="modal-header")
@@ -92,8 +92,8 @@ block content
     div(class="modal-body")
       form()
         div(class="form-group")
-          label Descripción:
-          input(type="text" class="form-control span4" ng-model="historyToEdit.descripcion" name="desc" id="desc" placeholder="Descripcion")
+          label Narrativa:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.narrativa" name="narrativa" id="narrativa" placeholder="Narrativa")
         div(class="form-group")
           label Tiempo estimado:
           input(type="text" class="form-control span4" ng-model="historyToEdit.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")

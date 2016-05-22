@@ -274,7 +274,7 @@ tiempoEstimado: req.body.tiempoEstimado,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
 creadorTarjeta: req.body.creadorTarjeta,
-descripcion: req.body.descripcion,
+narrativa: req.body.narrativa,
 }
 console.log(nuevosDatos);
 Backlog.findOneAndUpdate({_id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
@@ -295,7 +295,7 @@ tiempoEstimado: req.body.tiempoEstimado,
 prioridad: req.body.prioridad,
 estado: req.body.estado,
 creadorTarjeta: req.body.creadorTarjeta,
-descripcion: req.body.descripcion,
+narrativa: req.body.narrativa,
 proyectos: req.params.idProy
 });
 backlog.save().then(function(us){
@@ -486,5 +486,4 @@ app.post("/profile", function(req, res){
    });
 });
 
-//server.listen(8080);
 server.listen(process.env.PORT || 8000);
