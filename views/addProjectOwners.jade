@@ -4,15 +4,13 @@ block link
     link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
    
 block title
-  title Agregar Project Owner
-    
+  title Agregar Project Owner   
     
 block content
   div(class="container")
-  
-  
-    h3 Agregar Project Owner
-     
+    div(class="widget-header") 
+      i(class="icon-plus-sign")
+      h3 Agregar Project Owner
     div(class="widget widget-table action-table")
       div(class="widget-header") 
         i(class="icon-th-list")
@@ -23,21 +21,13 @@ block content
             tr
               th Nombre completo 
               th(class="td-actions") Agregar
-          each user in users
-            tbody
+          tbody
+            each user in users
               tr
                 td #{user.nombreCompleto} 
                 td(class="td-actions")
                   form(action="/agregarPO/#{user._id}/#{idProy}", method="POST")
                     input(type="submit" class="btn btn-primary" value="agregar" name="agregarDes")
-                    i(class="btn-icon-only icon-ok")
-        
-        
-      br
-      button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
-      input(type="submit" class="btn btn-primary" value="Guardar" name="savePO")
-
-//script.
-  $(window).load(function() {
-    $('#agregarProjectOwner').modal('show');
-  });
+  
+  script.
+    document.getElementById("newproject").style.visibility = "hidden";

@@ -22,11 +22,11 @@ block content
                     div(class="form-group")
                       input(type="text" class="form-control span4" ng-model="userHistory.narrativa" name="narrativa" id="narrativa" placeholder="Narrativa")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.tiempoEstimado" name="tiempoEstimado" id="tiempoEstimado" placeholder="Tiempo estimado")
+                      input(type="text" class="form-control span4" ng-model="userHistory.como" name="como" id="como" placeholder="Como")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+                      input(type="text" class="form-control span4" ng-model="userHistory.detalmanera" name="detalmanera" id="detalmanera" placeholder="De tal manera")
                     div(class="form-group")
-                      input(type="text" class="form-control span4" ng-model="userHistory.estado" name="estado" id="estado" placeholder="Estado")
+                      input(type="text" class="form-control span4" ng-model="userHistory.quiero" name="quiero" id="quiero" placeholder="Quiero")
                     div(class="form-group")
                       input(type="text" class="form-control span4" ng-model="userHistory.creadorTarjeta" name="creadorTarjeta" id="creadorTarjeta" placeholder="Creador tarjeta")
                     div
@@ -53,11 +53,11 @@ block content
                           li(sytle="list-style:none; margin: 1em; float: left")
                             a(href="#")
                               h2 Post it test
-                            p {{item.descripcion}}
-                            p {{item.tiempoEstimado}}
-                            p {{item.prioridad}}
-                            p {{item.estado}}
-                            p {{item.creadorTarjeta}}
+                            p Narrativa: {{item.narrativa}}
+                            p Como: {{item.como}}
+                            p De tal manera: {{item.detalmanera}}
+                            p Quiero: {{item.quiero}}
+                            p Creador {{item.creadorTarjeta}}
                             a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
                               i(class="btn-icon-only icon-edit")
                     // Termina post-it's.
@@ -95,14 +95,14 @@ block content
           label Narrativa:
           input(type="text" class="form-control span4" ng-model="historyToEdit.narrativa" name="narrativa" id="narrativa" placeholder="Narrativa")
         div(class="form-group")
-          label Tiempo estimado:
-          input(type="text" class="form-control span4" ng-model="historyToEdit.tiempoEstimado" name="tiempo" id="tiempo" placeholder="Tiempo estimado")
+          label Como:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.como" name="como" id="como" placeholder="Como")
         div(class="form-group")
-          label Prioridad:
-          input(type="text" class="form-control span4" ng-model="historyToEdit.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+          label De tal manera:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.detalmanera" name="detalmanera" id="detalmanera" placeholder="De tal manera")
         div(class="form-group")
-          label Estado:
-          input(type="text" class="form-control span4" ng-model="historyToEdit.estado" name="estado" id="estado" placeholder="Estado")
+          label Quiero:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.quiero" name="quiero" id="quiero" placeholder="Quiero")
         div(class="form-group")
           label Creador de tarjeta:
           input(type="text" class="form-control span4" ng-model="historyToEdit.creadorTarjeta" name="creador" id="creador" placeholder="Creador tarjeta")
@@ -110,6 +110,8 @@ block content
         div(class="modal-footer")
           button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
           button(class="btn btn-primary" ng-click="editbacklog()" data-dismiss="modal" aria-hidden="true") Guardar
+  script.
+    document.getElementById("newproject").style.visibility = "hidden";
 
 block footer
 block script
