@@ -10,7 +10,9 @@ block title
     
 block content
   div(class="container")
-    h3 Agregar Developers
+    div(class="widget-header") 
+      i(class="icon-plus-sign")
+      h3 Agregar Developers
     div(class="widget widget-table action-table")
       div(class="widget-header") 
         i(class="icon-th-list")
@@ -28,13 +30,6 @@ block content
                 td(class="td-actions")
                   form(action="/agregarDesarrolador/#{user._id}/#{idProy}", method="POST")
                     input(type="submit" class="btn btn-primary" value="agregar" name="agregarDes")
-                    i(class="btn-icon-only icon-ok")
-      br
-      button(class="btn" data-dismiss="modal" aria-hidden="true") Cancelar
-      input(type="submit" class="btn btn-primary" value="Guardar" name="sabeDev")
-    
-  //script.
-    $(window).load(function() {
-      $('#agregarDevelopers').modal('show');
-    });
-   
+
+  script.
+    document.getElementById("newproject").style.visibility = "hidden";
