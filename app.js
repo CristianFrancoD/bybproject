@@ -15,6 +15,7 @@ var Proyecto = require("./models/usuarios").Proyecto;
 var session = require("express-session");
 var FacebookStrategy = require("passport-facebook").Strategy;
 var TwitterStrategy = require("passport-twitter").Strategy;
+var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 app.set("view engine","jade");
 
@@ -60,16 +61,6 @@ io.on('connect',function(socket){
   })
 })
 
-
-module.exports = function(passport){
-  passport.serializeUser(function(user,done){
-    done(null,user);
-  });
-
-  passport.deserializeUser(function(obj,done){
-    done(null,obj);
-  })
-}
 
 passport.use(new FacebookStrategy({
   clientID:1693257597605353,
@@ -137,6 +128,34 @@ passport.use(new TwitterStrategy({
 }
 ));
 
+passport.use(new GoogleStrategy({
+        clientID        : "575938905641-o0dbccqtl9sn580ag7invltuu5p71u5s.apps.googleusercontent.com",
+        clientSecret    : "HnlV_zKNde9CTGhyTRmo-pgO",
+        //Deploy
+        callbackURL     : "https://bybprojectcarlos.herokuapp.com/auth/google/callback"
+        //Local
+        //callbackURL     : "https://bybproyecttest-carlossn.c9users.io/auth/google/callback",
+
+    },
+    function(token, refreshToken, profile, done) {
+      console.log(profile.emails[0].value);
+        Usuario.findOne({email:profile.emails[0].value},function(err, user) {
+            if(err) throw(err);
+            if(!err && user!=null) return done(null,user);
+            
+            var newUser = Usuario({
+              nombre:profile.name.givenName,
+              apellidoP:profile.name.familyName,
+              email:profile.emails[0].value
+            })
+            newUser.save(function(err){
+              if(err)throw(err);
+              console.log("Se agrego usuario de Google+")
+              return done(null,user);
+            })
+        })
+}
+))
 
 
 passport.use(new LocalStrategy({
