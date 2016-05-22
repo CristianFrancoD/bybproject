@@ -99,7 +99,7 @@ passport.use(new TwitterStrategy({
   //Local URL
   //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/twitter/callback",
   //DEPLOY URL
-  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/twitter/callback",
+  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/twitter/callback"
   
 },function(accessToken,refreshToken,profile,done){
   var email = profile.username+"@gmail.com";
