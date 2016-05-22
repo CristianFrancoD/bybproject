@@ -14,6 +14,7 @@ var Backlog = require("./models/usuarios").Backlog;
 var Proyecto = require("./models/usuarios").Proyecto;
 var session = require("express-session");
 var FacebookStrategy = require("passport-facebook").Strategy;
+var TwitterStrategy = require("passport-twitter").Strategy;
 
 app.set("view engine","jade");
 
@@ -59,6 +60,7 @@ io.on('connect',function(socket){
   })
 })
 
+
 module.exports = function(passport){
   passport.serializeUser(function(user,done){
     done(null,user);
@@ -73,7 +75,7 @@ passport.use(new FacebookStrategy({
   clientID:1693257597605353,
   clientSecret:"26006323ce0decde6b947789d2dc3910",
   //Local URL
-  //callbackURL:"https://proyectobyb-carlossn.c9users.io/auth/facebook/callback",
+  //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/facebook/callback",
   //DEPLOY URL
   callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/facebook/callback",
   profileFields:['id','name','email']
@@ -99,7 +101,44 @@ passport.use(new FacebookStrategy({
     })
   })
 }
-))
+));
+
+passport.use(new TwitterStrategy({
+  consumerKey:"W9JJCsHAXnkHQWMngJEpwp616",
+  consumerSecret:"PYRQue4X79i31vNwodQ7nMfXHcZPRTkOlwzUr3OpmodJ7IvxAG",
+  //Local URL
+  //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/twitter/callback",
+  //DEPLOY URL
+  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/twitter/callback"
+
+},function(accessToken,refreshToken,profile,done){
+  var email = profile.username+"@gmail.com";
+  var fullName = profile.displayName.split(" ");
+  var first_name = fullName[0];
+  var last_name = fullName[1];
+  console.log()
+  Usuario.findOne({email:email},function(err,user){
+    if(err)throw(err);
+    if(!err && user!=null) return done(null,user);
+        var newUser = new Usuario({
+      nombre:first_name,
+      apellidoP:last_name,
+      email:email
+    })
+    newUser.save(function(err){
+      if(err){
+        throw(err);
+      } else{
+        console.log("Se guardo usuario de Twitter");
+        return done(null,user);
+      }
+    })
+  })
+}
+));
+
+
+
 passport.use(new LocalStrategy({
   usernameField : 'email',
   passwordField : 'contra'
@@ -166,6 +205,16 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook',
      session:false
   }),function(req,res){
     console.log(req.user);
+    req.session.user = req.user._id;
+    res.redirect("/dashboard");
+  });
+
+  app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/twitter/callback', passport.authenticate('twitter',
+  {
+    failureRedirect: '/login' ,
+    session:false
+  }),function(req,res){
     req.session.user = req.user._id;
     res.redirect("/dashboard");
   });
