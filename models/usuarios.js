@@ -13,6 +13,14 @@ nombre: String,
 apellidoP: String,
 apellidoM: String,
 email: String,
+curp:String,
+rfc:String,
+domicilio:String,
+fechaNacimiento:String,
+habilidades:[{
+    habilidad:String,
+    grado:String
+}],
 contrasena:{type:String, minlength:[6,"El password es muy corto"]/*,validate:{
       validator: function(p){
         return this.confirmarPassword == p;

@@ -344,14 +344,19 @@ app.get("/simple-cards",user.can("anonymousUser"),function(req,res){
 
 
 app.get("/profile",user.can("anonymousUser"),function(req,res){
-
-    res.render("profile");
-
+  
+  console.log("Perfil del usuario");
+    Usuario.findOne({_id:req.session.user},function(err, user) {
+        if(err) throw err;
+        console.log("Se encontro usuario");
+        console.log(user);
+        res.render("profile",{user:user});    
+    })
 
 });
 
 app.get("/editProfile",user.can("anonymousUser"),function(req,res){
-
+    console.log(req.params.idUser)
     res.render("editProfile");
 
 
@@ -458,10 +463,24 @@ console.log(us)
 
   console.log(String(err));
   console.log("Hubo un error al guarda el backlog")
-
 });
 
 });
+
+app.post("/api/saveSkills",function(req, res) {
+  console.log("Guardando habilidades");
+  console.log(req.body)
+    Usuario.findOne({_id:req.session.user},function(err,doc){
+      if(err)throw err;
+      for(var item in req.body){
+        Usuario.findByIdAndUpdate({_id:req.session.user},{$push:{habilidades:req.body[item]}},function(err, user) {
+            if(err)throw err;
+        })
+      }
+      res.json(doc);
+    })
+})
+
 
 app.post("/signup", function(req,res){
 

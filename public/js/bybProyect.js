@@ -1,6 +1,8 @@
 bybApp = angular.module("bybApp",[]);
 bybApp.controller("backlogCtrl",function($scope,$http,$location){
-
+    $scope.showInfo = true;
+    $scope.habilidades=[];
+    $scope.skills = {};
     $scope.historias = [];
     $scope.userHistory = {};
     //Conexion a socket normal
@@ -55,4 +57,28 @@ $scope.saveUserHistory = function(id){
             console.log($scope.historias);
             $scope.$apply();
      })
+     
+     $scope.addSkill = function(){
+         $scope.habilidades.push({habilidad:$scope.skills.habilidad,grado:$scope.skills.grado});
+         console.log($scope.habilidades);
+         $scope.skills.habilidad = '';
+         $scope.skills.grado = '';
+     }
+     $scope.saveSkills = function(){
+         var newSkills = {
+             habilidades:$scope.habilidades
+         }
+         if($scope.habilidades.length>0){
+            $http({
+                url:"/api/saveSkills",
+                method:'POST',
+                data:$scope.habilidades
+            }).success(function(data) {
+                console.log(data);
+            }).error(function(err) {
+                console.log(String(err));
+            })    
+         }
+         
+     }
 })
