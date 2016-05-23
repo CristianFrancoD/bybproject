@@ -142,7 +142,7 @@ passport.use(new GoogleStrategy({
         Usuario.findOne({email:profile.emails[0].value},function(err, user) {
             if(err) throw(err);
             if(!err && user!=null) return done(null,user);
-            
+
             var newUser = Usuario({
               nombre:profile.name.givenName,
               apellidoP:profile.name.familyName,
@@ -426,6 +426,8 @@ detalmanera: req.body.detalmanera,
 quiero: req.body.quiero,
 creadorTarjeta: req.body.creadorTarjeta,
 narrativa: req.body.narrativa,
+prioridad: req.body.prioridad,
+tamanio: req.body.tamanio
 }
 console.log(nuevosDatos);
 Backlog.findOneAndUpdate({_id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
@@ -447,7 +449,14 @@ detalmanera: req.body.detalmanera,
 quiero: req.body.quiero,
 creadorTarjeta: req.body.creadorTarjeta,
 narrativa: req.body.narrativa,
-proyectos: req.params.idProy
+proyectos: req.params.idProy,
+prioridad: req.body.prioridad,
+tamanio: req.body.tamanio,
+criteriosAceptacion: req.body.criteriosAceptacion,
+dado: req.body.dado,
+cuando: req.body.cuando,
+entonces: req.body.entonces
+
 });
 backlog.save().then(function(us){
 res.json(us)

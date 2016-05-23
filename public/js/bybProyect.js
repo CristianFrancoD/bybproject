@@ -4,10 +4,10 @@ bybApp.controller("backlogCtrl",function($scope,$http,$location){
     $scope.historias = [];
     $scope.userHistory = {};
     //Conexion a socket normal
-    //$scope.socket = io.connect("http://",{'forceNew':true},{secure:true});
+    $scope.socket = io.connect("http://",{'forceNew':true},{secure:true});
 
     //Conexion a socket segura
-    $scope.socket = io.connect("https://",{'forceNew':true},{secure:true});
+    //$scope.socket = io.connect("https://",{'forceNew':true},{secure:true});
 
 
 $scope.getUserHistory = function(id){

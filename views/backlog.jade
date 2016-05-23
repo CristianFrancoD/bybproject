@@ -29,6 +29,18 @@ block content
                       input(type="text" class="form-control span4" ng-model="userHistory.quiero" name="quiero" id="quiero" placeholder="Quiero")
                     div(class="form-group")
                       input(type="text" class="form-control span4" ng-model="userHistory.creadorTarjeta" name="creadorTarjeta" id="creadorTarjeta" placeholder="Creador tarjeta")
+                    div(class="form-group")
+                      input(type="text" class="form-control span4" ng-model="userHistory.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+                    div(class="form-group")
+                      input(type="text" class="form-control span4" ng-model="userHistory.tamanio" name="tamanio" id="tamanio" placeholder="Tamaño")
+                    div(class="form-group")
+                      input(type="text" class="form-control span4" ng-model="userHistory.criteriosAceptacion" name="criteriosAceptacion" id="criteriosAceptacion" placeholder="Criterios de Aceptacion")
+                    div(class="form-group")
+                      input(type="text" class="form-control span4" ng-model="userHistory.dado" name="dado" id="dado" placeholder="Dado")
+                    div(class="form-group")
+                      input(type="text" class="form-control span4" ng-model="userHistory.cuando" name="cuando" id="cuando" placeholder="Cuando")
+                    div(class="form-group")
+                      input(type="text" class="form-control span4" ng-model="userHistory.entonces" name="entonces" id="entonces" placeholder="Entonces")      
                     div
                       input(type="submit" value="Aceptar" class="btn btn-info")
                     div(class="alert" style="margin-top: 10px;" ng-show="!userHistorys.length")
@@ -58,6 +70,8 @@ block content
                             p De tal manera: {{item.detalmanera}}
                             p Quiero: {{item.quiero}}
                             p Creador {{item.creadorTarjeta}}
+                            p Prioridad {{item.prioridad}}
+                            p Tamaño {{item.tamanio}}
                               if hayProductOwner 
                                     a(href="#aceptarHistoria" role="button" class="btn")
                                       i(class="btn-icon-only icon-ok-sign")
@@ -111,6 +125,12 @@ block content
         div(class="form-group")
           label Creador de tarjeta:
           input(type="text" class="form-control span4" ng-model="historyToEdit.creadorTarjeta" name="creador" id="creador" placeholder="Creador tarjeta")
+        div(class="form-group")
+          label Prioridad:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.prioridad" name="prioridad" id="prioridad" placeholder="Prioridad")
+        div(class="form-group")
+          label Tamaño:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.tamanio" name="tamanio" id="tamanio" placeholder="Tamaño")
 
         div(class="modal-footer")
           button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
