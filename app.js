@@ -15,6 +15,7 @@ var Proyecto = require("./models/usuarios").Proyecto;
 var session = require("express-session");
 var FacebookStrategy = require("passport-facebook").Strategy;
 var TwitterStrategy = require("passport-twitter").Strategy;
+var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 app.set("view engine","jade");
 
@@ -61,23 +62,13 @@ io.on('connect',function(socket){
 })
 
 
-module.exports = function(passport){
-  passport.serializeUser(function(user,done){
-    done(null,user);
-  });
-
-  passport.deserializeUser(function(obj,done){
-    done(null,obj);
-  })
-}
-
 passport.use(new FacebookStrategy({
   clientID:1693257597605353,
   clientSecret:"26006323ce0decde6b947789d2dc3910",
   //Local URL
   //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/facebook/callback",
   //DEPLOY URL
-  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/facebook/callback",
+  callbackURL:"https://bybproyectcarlos.herokuapp.com/auth/facebook/callback",
   profileFields:['id','name','email']
 },function(accessToken,refreshToken,profile,done){
 
@@ -109,7 +100,7 @@ passport.use(new TwitterStrategy({
   //Local URL
   //callbackURL:"https://bybproyecttest-carlossn.c9users.io/auth/twitter/callback",
   //DEPLOY URL
-  callbackURL:"https://bybprojectcarlos.herokuapp.com/auth/twitter/callback"
+  callbackURL:"https://bybproyectcarlos.herokuapp.com/auth/twitter/callback"
 
 },function(accessToken,refreshToken,profile,done){
   var email = profile.username+"@gmail.com";
@@ -137,6 +128,34 @@ passport.use(new TwitterStrategy({
 }
 ));
 
+passport.use(new GoogleStrategy({
+        clientID        : "575938905641-o0dbccqtl9sn580ag7invltuu5p71u5s.apps.googleusercontent.com",
+        clientSecret    : "HnlV_zKNde9CTGhyTRmo-pgO",
+        //Deploy
+        callbackURL     : "https://bybproyectcarlos.herokuapp.com/auth/google/callback"
+        //Local
+        //callbackURL     : "https://bybproyecttest-carlossn.c9users.io/auth/google/callback",
+
+    },
+    function(token, refreshToken, profile, done) {
+      console.log(profile.emails[0].value);
+        Usuario.findOne({email:profile.emails[0].value},function(err, user) {
+            if(err) throw(err);
+            if(!err && user!=null) return done(null,user);
+
+            var newUser = Usuario({
+              nombre:profile.name.givenName,
+              apellidoP:profile.name.familyName,
+              email:profile.emails[0].value
+            })
+            newUser.save(function(err){
+              if(err)throw(err);
+              console.log("Se agrego usuario de Google+")
+              return done(null,user);
+            })
+        })
+}
+))
 
 
 passport.use(new LocalStrategy({
@@ -211,6 +230,16 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook',
 
   app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter',
+  {
+    failureRedirect: '/login' ,
+    session:false
+  }),function(req,res){
+    req.session.user = req.user._id;
+    res.redirect("/dashboard");
+  });
+
+ app.get('/auth/google', passport.authenticate('google',{scope:['profile','email']}));
+app.get('/auth/google/callback', passport.authenticate('google',
   {
     failureRedirect: '/login' ,
     session:false
@@ -397,6 +426,8 @@ detalmanera: req.body.detalmanera,
 quiero: req.body.quiero,
 creadorTarjeta: req.body.creadorTarjeta,
 narrativa: req.body.narrativa,
+prioridad: req.body.prioridad,
+tamanio: req.body.tamanio
 }
 console.log(nuevosDatos);
 Backlog.findOneAndUpdate({_id:req.body._id}, nuevosDatos, {upsert:true}, function(err, doc){
@@ -418,7 +449,14 @@ detalmanera: req.body.detalmanera,
 quiero: req.body.quiero,
 creadorTarjeta: req.body.creadorTarjeta,
 narrativa: req.body.narrativa,
-proyectos: req.params.idProy
+proyectos: req.params.idProy,
+prioridad: req.body.prioridad,
+tamanio: req.body.tamanio,
+criteriosAceptacion: req.body.criteriosAceptacion,
+dado: req.body.dado,
+cuando: req.body.cuando,
+entonces: req.body.entonces
+
 });
 backlog.save().then(function(us){
 res.json(us)
