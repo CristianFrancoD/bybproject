@@ -126,7 +126,19 @@ block content
         div(class="form-group")
           label Tamaño:
           input(type="text" class="form-control span4" ng-model="historyToEdit.tamanio" name="tamanio" id="tamanio" placeholder="Tamaño")
-
+        div(class="form-group")
+          label Criterios de aceptacion:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.criteriosAceptacion" name="criteriosAceptacion" id="criteriosAceptacion" placeholder="Criterios de aceptacion")
+        div(class="form-group")
+          label Dado:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.dado" name="dado" id="dado" placeholder="Dado")
+        div(class="form-group")
+          label Cuando:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.cuando" name="cuando" id="cuando" placeholder="Cuando")
+        div(class="form-group")
+          label Entonces:
+          input(type="text" class="form-control span4" ng-model="historyToEdit.entonces" name="entonces" id="entonces" placeholder="Entonces")
+                                              
         div(class="modal-footer")
           button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
           button(class="btn btn-primary" ng-click="editbacklog()" data-dismiss="modal" aria-hidden="true") Guardar
