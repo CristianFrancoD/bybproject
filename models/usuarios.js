@@ -55,6 +55,12 @@ backlogSchema.add({
   quiero: String,
   creadorTarjeta: String,
   narrativa: String,
+  prioridad: String,
+  tamanio: String,
+  criteriosAceptacion: String,
+  dado: String,
+  cuando: String,
+  entonces: String,
   proyectos:[ {type : mongoose.Schema.ObjectId, ref : 'Proyecto'}]
 });
 
