@@ -15,16 +15,18 @@ head
   link(href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet")
   link(href="/styles/template/bootstrap.min.css" rel="stylesheet")
   link(href="/styles/template/bootstrap-responsive.min.css" rel="stylesheet")
-  link(href="/styles/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet")
+  link(href="/styles/datetimepicker/default.css" rel="stylesheet")
   link(href="/styles/template/font-awesome.css" rel="stylesheet")
   link(href="/styles/template/style.css" rel="stylesheet")
   link(href="/styles/pages/dashboard.css" rel="stylesheet")
-  link(href="/styles/cards/rotating-card.css" rel="stylesheet")
   link(rel="stylesheet" type="text/css" href="/styles/style5.css")
-  link(rel="stylesheet" type="text/css" href="/styles/jquery-dropdown.css")
-  link(rel="stylesheet" type="text/css" href="/styles/cards/awesome-buttons.css")
   link(href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css')
-
+  link(href='/styles/rotate-card.css' rel='stylesheet' type='text/css')
+  
+  script(src="/js/template/jquery-1.7.2.min.js")
+  script(src="/js/utils.js")
+  script(src="/js/flip-card.js")
+  
   // Bloque de título.
   block title
   title #{titulo} | B&B Projects
@@ -108,16 +110,16 @@ body(ng-controller="backlogCtrl")
   block content
     div(ng-controller="backlogCtrl")
     
-  //div(style="position: absolute; left:50%; top:50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%);")
-  //  div(class="button-wrapper")
-  //    a(href="#" class="a-btn")
-  //      span(class="a-btn-symbol") Z
-  //      span(class="a-btn-text") Sin proyectos
-  //      span(class="a-btn-slide-text") Crea tu primer proyecto
-  //      span(class="a-btn-slide-icon")
+      div(style="position: absolute; left:50%; top:50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%);")
+        div(class="button-wrapper")
+          a(href="#newProjectModal" data-toggle="modal" class="a-btn" style="text-decoration: none;")
+            span(class="a-btn-symbol") Z
+            span(class="a-btn-text") Sin proyectos
+            span(class="a-btn-slide-text") Crea tu primer proyecto
+            span(class="a-btn-slide-icon")
 
   block footer
-  div(class="footer")
+  div(class="footer" style="position: fixed; bottom: 0; width: 100%;")
     div(class="footer-inner")
       div(class="container")
         div(class="row")
@@ -143,16 +145,12 @@ body(ng-controller="backlogCtrl")
                 label(class="control-label" for="fechaSolicitud") Fecha de solicitud:
                 div(class="controls")
                   div(class="input-prepend input-append")
-                    input(class="span2" type="text" name="fechaSolicitud")
-                    span(class="add-on")
-                      i(class="icon-calendar")
-              div(class="control-group date" id="fechaInicioCalendario")
+                    input(class="span2" type="text" name="fechaSolicitud" id="fechaSol")
+                div(class="control-group date" id="fechaInicioCalendario")
                 label(class="control-label" for="fechaInicio") Fecha de inicio:
                 div(class="controls")
                   div(class="input-prepend input-append")
                     input(class="span2" id="fechaInicio" type="text" name="fechaArranque")
-                    span(class="add-on")
-                      i(class="icon-calendar")
               div(class="control-group")
                 label(class="control-label" for="Descripcion") Descripción:
                 div(class="controls")
@@ -161,20 +159,17 @@ body(ng-controller="backlogCtrl")
               input(class="btn" data-dismiss="modal" aria-hidden="true" value="Cancelar")
               a(href="/simple-cards")
               input(class="btn btn-primary" type="submit" value="Crear Proyecto")
-  script(src="/js/template/jquery-1.7.2.min.js")
+  script.
+    $(document).ready(function() {
+      $('#fechaSol').Zebra_DatePicker();
+      $('#fechaInicio').Zebra_DatePicker();
+    });
+  
   script(src="/js/template/excanvas.min.js")
   script(src="/js/template/bootstrap.js")
   script(src="/js/template/base.js")
-  script(src="/js/datetimepicker/moments.js")
-  script(src="/js/datetimepicker/bootstrap-datetimepicker.min.js")
-  script(src="/js/jquery-dropdown.js")
+  //script(src="/js/datetimepicker/moments.js")
+  script(src="/js/datetimepicker/zebra_datepicker.js")
   script(src="/socket.io/socket.io.js")
   script(src="/js/angular/angular.min.js")
   script(src="/js/bybProyect.js")
-
-  //script.
-  //  $(document).ready(function() {
-  //    $('#fechaSolicitudCalendario').datepicker({
-  //      locale: 'es'
-  //    });
-  //  });

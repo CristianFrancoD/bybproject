@@ -50,22 +50,53 @@ block content
                       div(class="widget-header")
                         i(class="icon-th-list")
                         h3 Historias de usuario
-                      div(class="widget-content")
-                        ul(style="list-style:none; overflow: hidden; padding: 1em; margin: 1em; float: left;" class="ul-li-a" ng-repeat="item in historias")
-                          li(sytle="list-style:none; margin: 1em; float: left")
-                            h2 {{item.narrativa}}
-                            p Como: {{item.como}}
-                            p De tal manera: {{item.detalmanera}}
-                            p Quiero: {{item.quiero}}
-                            p Creador {{item.creadorTarjeta}}
-                              if hayProductOwner 
+                      div(class="widget-content" style="padding: 20px;")
+                        //ul(style="list-style:none; overflow: hidden; padding: 1em; margin: 1em; float: left;" class="ul-li-a" ng-repeat="item in historias")
+                        //  li(sytle="list-style:none; margin: 1em; float: left")
+                        //    h2 {{item.narrativa}}
+                        //    p Como: {{item.como}}
+                        //    p De tal manera: {{item.detalmanera}}
+                        //    p Quiero: {{item.quiero}}
+                        //    p Creador {{item.creadorTarjeta}}
+                        //    if hayProductOwner 
+                        //      a(href="#aceptarHistoria" role="button" class="btn")
+                        //        i(class="btn-icon-only icon-ok-sign")
+                        //      a(href="#rechazarHistoria" role="button" class="btn")
+                        //        i(class="btn-icon-only icon-remove")  
+                        //    a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
+                        //      i(class="btn-icon-only icon-edit")
+                        // Termina post-it's.
+                        div(class="flip-container" ntouchstart="this.classList.toggle('hover');" ng-repeat="item in historias")
+                          a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
+                            i(class="btn-icon-only icon-edit")      
+                          div(class="flipper")
+                            div(class="front")
+                              ul(style="list-style:none; overflow: hidden; padding: 1em; margin: 1em; float: left;")
+                                li(sytle="list-style:none; margin: 1em; float: left;")
+                                  h2 {{item.narrativa}}
+                                  p Como: {{item.como}}
+                                  p De tal manera: {{item.detalmanera}}
+                                  p Quiero: {{item.quiero}}
+                                  p Creador {{item.creadorTarjeta}}
+                                  if hayProductOwner 
                                     a(href="#aceptarHistoria" role="button" class="btn")
                                       i(class="btn-icon-only icon-ok-sign")
                                     a(href="#rechazarHistoria" role="button" class="btn")
                                       i(class="btn-icon-only icon-remove")  
-                            a(href="#editarHistoria" role="button" class="btn" data-toggle="modal" ng-click="showEditbacklog($index)")
-                              i(class="btn-icon-only icon-edit")
-                    // Termina post-it's.
+                            div(class="back")
+                              h1 adios
+                            
+                        // Test de flip-cards.
+                        //section(class="containerBC" style="display: block")
+                        //  div(id="card")
+                        //    figure(class="front" ng-repeat="item in historias") 
+                        //      h2 {{item.narrativa}}
+                        //    figure(class="back") 
+                        //      h2 felicidad
+                  
+                        //section(id="optionsBC" style="position: relative; z-index: 100; margin-bottom: 40px;")
+                        //  button(id="flip") Flip Card
+                    
                     //div(class="widget widget-table action-table" style="margin-top: 10px;")
                     //  div(class="widget-header")
                     //    i(class="icon-th-list")
@@ -115,6 +146,7 @@ block content
         div(class="modal-footer")
           button(class="btn" data-dismiss="modal" aria-hidden="true") Cerrar
           button(class="btn btn-primary" ng-click="editbacklog()" data-dismiss="modal" aria-hidden="true") Guardar
+  br
   script.
     document.getElementById("newproject").style.visibility = "hidden";
 
